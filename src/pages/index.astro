@@ -1,0 +1,387 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="Runtime">
+  <main class="landing">
+    <section class="hero">
+      <div class="corner tl"></div>
+      <div class="corner tr"></div>
+
+      <h1 class="main-title">RUNTIME</h1>
+
+      <p class="subtitle">SPIN FOR YOUR COMPONENTS, MAKE YOUR FIRST PCB</p>
+
+      <div class="mini-preview" aria-hidden="true">
+        <div class="mini-machine mini-plug">
+          <div class="mini-body" style="background: var(--yellow)">
+            <span class="mini-label">INPUT</span>
+          </div>
+          <div class="mini-prongs">
+            <div class="mini-prong"></div>
+            <div class="mini-prong"></div>
+          </div>
+        </div>
+
+        <svg
+          class="mini-wire"
+          viewBox="0 0 90 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M 4 12 C 22 4 44 20 62 12 C 78 5 84 12 86 12"
+            stroke="var(--ink)"
+            stroke-width="3.5"
+            stroke-linecap="round"></path>
+        </svg>
+
+        <div class="mini-machine mini-monitor">
+          <div class="mini-antennae">
+            <div class="mini-ant"></div>
+            <div class="mini-ant"></div>
+          </div>
+          <div class="mini-body" style="background: var(--teal)">
+            <div class="mini-screen-inset">
+              <span
+                class="mini-label"
+                style="color: #7fffee; font-size: 0.42rem">CONNECTOR</span
+              >
+            </div>
+          </div>
+          <div class="mini-stand"></div>
+          <div class="mini-base"></div>
+        </div>
+
+        <svg
+          class="mini-wire"
+          viewBox="0 0 90 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M 4 12 C 22 4 44 20 62 12 C 78 5 84 12 86 12"
+            stroke="var(--ink)"
+            stroke-width="3.5"
+            stroke-linecap="round"></path>
+        </svg>
+
+        <div class="mini-machine mini-speaker">
+          <div class="mini-body" style="background: var(--orange)">
+            <span class="mini-label">OUTPUT</span>
+          </div>
+          <svg
+            class="mini-waves"
+            viewBox="0 0 32 56"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M 4 14 Q 14 28 4 42"
+              stroke="var(--ink)"
+              stroke-width="3"
+              stroke-linecap="round"
+              fill="none"></path>
+            <path
+              d="M 12 7 Q 26 28 12 49"
+              stroke="var(--ink)"
+              stroke-width="3"
+              stroke-linecap="round"
+              fill="none"></path>
+            <path
+              d="M 20 2 Q 38 28 20 54"
+              stroke="var(--ink)"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              fill="none"></path>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <div class="stripe-band" role="presentation">
+      <div class="stripe" style="background: var(--pink)"></div>
+      <div class="stripe" style="background: var(--orange)"></div>
+      <div class="stripe" style="background: var(--yellow)"></div>
+    </div>
+
+    <section class="cta-section">
+      <a href="/generate" class="cta-link">
+        <span class="cta-arrow">▶</span>
+        <span class="cta-text blink">PRESS ANY KEY TO START</span>
+        <span class="cta-arrow">◀</span>
+      </a>
+    </section>
+
+    <div class="corner bl"></div>
+    <div class="corner br"></div>
+  </main>
+</Layout>
+
+<style>
+  :global(html),
+  :global(body) {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .landing {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .top-banner {
+    flex-shrink: 0;
+    background: var(--ink);
+    color: var(--yellow);
+    text-align: center;
+    padding: 7px 16px;
+    font-size: 0.65rem;
+    letter-spacing: 0.28em;
+    font-weight: 700;
+  }
+
+  .hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 20px 24px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    min-height: 0;
+  }
+
+  .corner {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-color: var(--ink);
+    border-style: solid;
+    opacity: 0.5;
+  }
+  .corner.tl {
+    top: 16px;
+    left: 16px;
+    border-width: 3px 0 0 3px;
+  }
+  .corner.tr {
+    top: 16px;
+    right: 16px;
+    border-width: 3px 3px 0 0;
+  }
+  .corner.bl {
+    bottom: 16px;
+    left: 16px;
+    border-width: 0 0 3px 3px;
+  }
+  .corner.br {
+    bottom: 16px;
+    right: 16px;
+    border-width: 0 3px 3px 0;
+  }
+
+  .main-title {
+    font-family: "Helvetica", sans-serif;
+    font-size: clamp(64px, 14vw, 140px);
+    color: var(--bg);
+    -webkit-text-stroke: 6px var(--ink);
+    text-shadow: 8px 8px 0 var(--ink);
+    line-height: 0.88;
+    letter-spacing: 0.02em;
+    user-select: none;
+    animation: spin-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  }
+
+  .subtitle {
+    font-size: clamp(0.55rem, 1.4vw, 0.75rem);
+    letter-spacing: 0.22em;
+    font-weight: 700;
+    opacity: 0.65;
+    text-transform: uppercase;
+    margin-top: -2px;
+    margin-bottom: 2rem;
+  }
+
+  .mini-preview {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    background: white;
+    border: 3px solid var(--ink);
+    border-radius: 12px;
+    box-shadow: 5px 5px 0 var(--ink);
+    margin-top: 4px;
+  }
+
+  .mini-machine {
+    display: flex;
+    align-items: center;
+  }
+
+  .mini-body {
+    width: 68px;
+    height: 64px;
+    border: 2.5px solid var(--ink);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+
+  .mini-label {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 0.52rem;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+  }
+
+  .mini-plug {
+    flex-direction: row;
+  }
+  .mini-prongs {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    margin-left: -2px;
+  }
+  .mini-prong {
+    width: 16px;
+    height: 6px;
+    background: #aaa;
+    border: 2px solid var(--ink);
+    border-left: none;
+    border-radius: 0 3px 3px 0;
+  }
+
+  .mini-monitor {
+    flex-direction: column;
+    align-items: center;
+  }
+  .mini-antennae {
+    display: flex;
+    gap: 10px;
+    margin-bottom: -2px;
+    z-index: 1;
+  }
+  .mini-ant {
+    width: 3px;
+    height: 16px;
+    background: var(--ink);
+    border-radius: 2px;
+  }
+  .mini-monitor .mini-body {
+    width: 84px;
+    padding: 5px;
+  }
+  .mini-screen-inset {
+    width: 100%;
+    height: 100%;
+    background: #0d1117;
+    border: 2px solid var(--ink);
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mini-stand {
+    width: 14px;
+    height: 9px;
+    background: var(--ink);
+    margin-top: -2px;
+  }
+  .mini-base {
+    width: 40px;
+    height: 5px;
+    background: var(--ink);
+    border-radius: 2px;
+  }
+
+  .mini-speaker {
+    flex-direction: row;
+  }
+  .mini-waves {
+    width: 28px;
+    height: 50px;
+    margin-left: 4px;
+  }
+  .mini-wire {
+    width: 72px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+
+  .stripe-band {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+  }
+  .stripe {
+    height: 16px;
+    width: 100%;
+  }
+
+  .cta-section {
+    flex-shrink: 0;
+    padding: 14px 24px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .cta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--ink);
+    color: var(--yellow);
+    border: 4px solid var(--ink);
+    border-radius: 6px;
+    padding: 14px 32px;
+    text-decoration: none;
+    transition:
+      transform 0.1s,
+      box-shadow 0.1s;
+  }
+  .cta-link:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0 var(--yellow);
+  }
+  .cta-link:active {
+    transform: translate(6px, 6px);
+    box-shadow: 0 0 0 var(--yellow);
+  }
+
+  .cta-text {
+    font-family: "Bebas Neue", sans-serif;
+    font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+    letter-spacing: 0.1em;
+  }
+  .cta-arrow {
+    font-size: 1.2rem;
+  }
+  .blink {
+    animation: blink 1.1s step-end infinite;
+  }
+</style>
+
+<script>
+  const go = () => {
+    window.location.href = "/generate";
+  };
+
+  document.addEventListener("keydown", (e) => {
+    if (!["Tab", "Escape", "F1", "F5", "F11", "F12"].includes(e.key)) go();
+  });
+
+  document.addEventListener("click", (e) => {
+    const target = e.target as HTMLElement;
+    if (!target.closest("a")) go();
+  });
+</script>
