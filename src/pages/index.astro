@@ -5,7 +5,7 @@ import "../styles/global.css";
 
 <Layout title="Runtime">
   <main class="landing">
-    <section class="hero">
+    <div class="hero">
       <div class="corner tl"></div>
       <div class="corner tr"></div>
 
@@ -98,7 +98,7 @@ import "../styles/global.css";
           </svg>
         </div>
       </div>
-    </section>
+    </div>
 
     <div class="stripe-band" role="presentation">
       <div class="stripe" style="background: var(--pink)"></div>
@@ -106,13 +106,13 @@ import "../styles/global.css";
       <div class="stripe" style="background: var(--yellow)"></div>
     </div>
 
-    <section class="cta-section">
+    <div class="cta-div">
       <a href="/generate" class="cta-link">
         <span class="cta-arrow">▶</span>
         <span class="cta-text blink">PRESS ANY KEY TO START</span>
         <span class="cta-arrow">◀</span>
       </a>
-    </section>
+    </div>
 
     <div class="corner bl"></div>
     <div class="corner br"></div>
@@ -196,7 +196,6 @@ import "../styles/global.css";
     line-height: 0.88;
     letter-spacing: 0.02em;
     user-select: none;
-    animation: spin-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   }
 
   .subtitle {
@@ -328,7 +327,7 @@ import "../styles/global.css";
     width: 100%;
   }
 
-  .cta-section {
+  .cta-div {
     flex-shrink: 0;
     padding: 14px 24px 18px;
     display: flex;
@@ -378,7 +377,7 @@ import "../styles/global.css";
   };
 
   document.addEventListener("keydown", (e) => {
-    if (!["Tab", "Escape", "F1", "F5", "F11", "F12", "Alt"].includes(e.key)) go();
+    if (!["Tab", "Escape", "F1", "F5", "F11", "F12", "Alt", "Control"].includes(e.key)) go();
   });
 
   document.addEventListener("click", (e) => {
