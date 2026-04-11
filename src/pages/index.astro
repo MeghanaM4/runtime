@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import "../styles/global.css";
 ---
 
 <Layout title="Runtime">
@@ -13,13 +14,13 @@ import Layout from "../layouts/Layout.astro";
       <p class="subtitle">SPIN FOR YOUR COMPONENTS, MAKE YOUR FIRST PCB</p>
 
       <div class="mini-preview" aria-hidden="true">
+		<div class="mini-prongs">
+            <div class="mini-prong"></div>
+            <div class="mini-prong"></div>
+          </div>
         <div class="mini-machine mini-plug">
           <div class="mini-body" style="background: var(--yellow)">
             <span class="mini-label">INPUT</span>
-          </div>
-          <div class="mini-prongs">
-            <div class="mini-prong"></div>
-            <div class="mini-prong"></div>
           </div>
         </div>
 
@@ -45,7 +46,7 @@ import Layout from "../layouts/Layout.astro";
             <div class="mini-screen-inset">
               <span
                 class="mini-label"
-                style="color: #7fffee; font-size: 0.42rem">CONNECTOR</span
+                style="color: #7fffee;">CONNECTOR</span
               >
             </div>
           </div>
@@ -188,7 +189,7 @@ import Layout from "../layouts/Layout.astro";
 
   .main-title {
     font-family: "Helvetica", sans-serif;
-    font-size: clamp(64px, 14vw, 140px);
+    font-size: clamp(60px, 14vw, 120px);
     color: var(--bg);
     -webkit-text-stroke: 6px var(--ink);
     text-shadow: 8px 8px 0 var(--ink);
@@ -237,7 +238,7 @@ import Layout from "../layouts/Layout.astro";
 
   .mini-label {
     font-family: "Bebas Neue", sans-serif;
-    font-size: 0.52rem;
+    font-size: 0.8rem;
     letter-spacing: 0.08em;
     color: var(--ink);
   }
@@ -249,14 +250,14 @@ import Layout from "../layouts/Layout.astro";
     display: flex;
     flex-direction: column;
     gap: 9px;
-    margin-left: -2px;
+    margin-right: -2px;
   }
   .mini-prong {
     width: 16px;
     height: 6px;
     background: #aaa;
     border: 2px solid var(--ink);
-    border-left: none;
+    border-right: none;
     border-radius: 0 3px 3px 0;
   }
 
@@ -309,7 +310,7 @@ import Layout from "../layouts/Layout.astro";
   .mini-waves {
     width: 28px;
     height: 50px;
-    margin-left: 4px;
+    margin-left: 10px;
   }
   .mini-wire {
     width: 72px;

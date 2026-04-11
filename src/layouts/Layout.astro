@@ -1,4 +1,6 @@
 ---
+import '../styles/global.css'
+
 interface Props {
   title: string;
   description?: string;
@@ -24,77 +26,3 @@ const { description = 'Runtime - make your first PCB' } = Astro.props;
     <slot />
   </body>
 </html>
-
-<style is:global>
-  :root {
-    --bg: #F5EDD0;
-    --ink: #1A0A00;
-    --pink: #FF3560;
-    --orange: #FF6B2B;
-    --yellow: #FFC400;
-    --green: #00C277;
-    --teal: #00AABB;
-    --blue: #0066FF;
-    --purple: #7C3AED;
-    --cream-dark: #EAD9B0;
-  }
-
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
-
-  body {
-    background: var(--bg);
-    color: var(--ink);
-    font-family: 'Space Mono', monospace;
-    overflow-x: hidden;
-    min-height: 100vh;
-  }
-
-  .bebas {
-    font-family: 'Bebas Neue', sans-serif;
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0) rotate(var(--rotate, -2deg)); }
-    50% { transform: translateY(-10px) rotate(var(--rotate, -2deg)); }
-  }
-
-  @keyframes blink {
-    0%, 100% { opacity: 1; }
-    49% { opacity: 1; }
-    50% { opacity: 0; }
-    99% { opacity: 0; }
-  }
-
-  @keyframes spin-in {
-    from { transform: scale(0.8) rotate(-5deg); opacity: 0; }
-    to   { transform: scale(1) rotate(0deg); opacity: 1; }
-  }
-
-  @keyframes slide-up {
-    from { transform: translateY(30px); opacity: 0; }
-    to   { transform: translateY(0); opacity: 1; }
-  }
-
-  @keyframes pop {
-    0%   { transform: scale(1); }
-    40%  { transform: scale(1.06); }
-    70%  { transform: scale(0.97); }
-    100% { transform: scale(1); }
-  }
-
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    20%  { transform: translateX(-3px) rotate(-0.5deg); }
-    40%  { transform: translateX(3px) rotate(0.5deg); }
-    60%  { transform: translateX(-2px); }
-    80%  { transform: translateX(2px); }
-  }
-</style>
