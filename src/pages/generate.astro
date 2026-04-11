@@ -491,7 +491,6 @@ const { inputs, outputs, connectors } = params;
 
   let rollsUsed = 0;
   let isSpinning = false;
-  let stripsBuilt = false;
 
   const spinBtn = document.getElementById("spin-btn");
   const spinBtnText = document.getElementById("spin-btn-text");
@@ -622,13 +621,6 @@ const { inputs, outputs, connectors } = params;
     isSpinning = true;
     rollsUsed++;
 
-    if (!stripsBuilt) {
-      buildStrip(machines.input.strip, inputs);
-      buildStrip(machines.output.strip, outputs);
-      buildStrip(machines.connector.strip, connectors);
-      stripsBuilt = true;
-    }
-
     getStartedBtn.hidden = true;
     Object.values(machines).forEach((m) => m.impl.classList.remove("visible"));
 
@@ -637,6 +629,7 @@ const { inputs, outputs, connectors } = params;
     updatePips();
 
     // 1. INPUT
+    buildStrip(machines.input.strip, inputs);
     machines.input.el.classList.add("spinning");
     const inputRes = await spinStrip(machines.input.strip, inputs, 2000);
     machines.input.el.classList.remove("spinning");
@@ -647,6 +640,7 @@ const { inputs, outputs, connectors } = params;
     await sleep(300);
 
     // 2. OUTPUT
+    buildStrip(machines.output.strip, outputs);
     machines.output.el.classList.add("spinning");
     const outputRes = await spinStrip(machines.output.strip, outputs, 2000);
     machines.output.el.classList.remove("spinning");
@@ -657,6 +651,7 @@ const { inputs, outputs, connectors } = params;
     await sleep(300);
 
     // 3. CONNECTOR
+    buildStrip(machines.connector.strip, connectors);
     machines.connector.el.classList.add("spinning");
     const connectorRes = await spinStrip(
       machines.connector.strip,
