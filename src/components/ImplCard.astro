@@ -1,0 +1,102 @@
+---
+interface Props {
+  id: string;
+  color: string;
+  typeLabel: string;
+  class?: string;
+}
+
+const { id, color, typeLabel, class: className } = Astro.props;
+---
+
+<div class:list={["impl-card", className]} id={id}>
+  <div class="card-header" style={`background: ${color}`}>
+    <span class="card-type-badge">{typeLabel}</span>
+    <span class="card-title bebas" id={`${id}-label`}></span>
+  </div>
+  <div class="card-body">
+    <div class="impl-components">
+      <span class="impl-tag bebas">COMPONENTS</span>
+      <div class="impl-chips" id={`${id}-chips`}></div>
+    </div>
+    <div class="impl-text" id={`${id}-text`}></div>
+  </div>
+</div>
+
+<style>
+  .impl-card {
+    background: white;
+    border: 3px solid var(--ink);
+    border-radius: 10px;
+    box-shadow: 4px 4px 0 var(--ink);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transform: translateY(16px);
+    pointer-events: none;
+    transition:
+      opacity 0.4s ease,
+      transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .impl-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  .card-header {
+    padding: 10px 14px;
+    border-bottom: 3px solid var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .card-type-badge {
+    font-family: "Space Mono", monospace;
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    background: rgba(0, 0, 0, 0.18);
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+    letter-spacing: 0.08em;
+  }
+
+  .card-body {
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .impl-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    opacity: 0.55;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .impl-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .impl-text {
+    font-size: 0.62rem;
+    line-height: 1.65;
+    border-top: 2px solid rgba(0, 0, 0, 0.1);
+    padding-top: 8px;
+    margin-top: 2px;
+    color: var(--ink);
+  }
+</style>

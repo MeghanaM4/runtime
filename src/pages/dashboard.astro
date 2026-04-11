@@ -1,8 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import params from "../data/parameters.json";
-
-const { inputs, outputs, connectors } = params;
+import ImplCard from "../components/ImplCard.astro";
 ---
 
 <Layout title="Dashboard">
@@ -12,16 +10,20 @@ const { inputs, outputs, connectors } = params;
       <span class="nav-title bebas">RUNTIME</span>
     </nav>
 
-    <section class="dashboard-section">
+    <div class="dashboard-div">
       <div class="dashboard-card">
         <div class="dashboard-eyebrow bebas">YOUR RUNTIME CHALLENGE</div>
         <p class="dashboard-text bebas" id="dashboard-text"></p>
       </div>
-    </section>
+    </div>
 
-    <section class="cards-section">
-      <div class="cards-row" id="cards-row"></div>
-    </section>
+    <div class="cards-div">
+      <div class="cards-col">
+        <ImplCard id="impl-input" color="var(--yellow)" typeLabel="INPUT" class="dashboard-impl-card" />
+        <ImplCard id="impl-connector" color="var(--teal)" typeLabel="CONNECTOR" class="dashboard-impl-card" />
+        <ImplCard id="impl-output" color="var(--orange)" typeLabel="OUTPUT" class="dashboard-impl-card" />
+      </div>
+    </div>
   </main>
 </Layout>
 
@@ -60,7 +62,7 @@ const { inputs, outputs, connectors } = params;
     text-align: center;
   }
 
-  .dashboard-section {
+  .dashboard-div {
     display: flex;
     justify-content: center;
     padding: 3rem 2rem 2rem;
@@ -103,158 +105,80 @@ const { inputs, outputs, connectors } = params;
     color: var(--teal);
   }
 
-  .cards-section {
-    padding: 0 2rem 3rem;
+  .cards-div {
     display: flex;
     justify-content: center;
   }
 
-  .cards-row {
+  .cards-col {
     display: flex;
     gap: 1.5rem;
     flex-wrap: wrap;
     justify-content: center;
     max-width: 1100px;
-    width: 100%;
+    width: 80vw;
   }
 
-  .impl-card {
+  .dashboard-impl-card {
     flex: 1;
     min-width: 260px;
     max-width: 340px;
-    background: white;
-    border: 3px solid var(--ink);
-    border-radius: 10px;
-    box-shadow: 4px 4px 0 var(--ink);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: card-appear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  }
-
-  .impl-card:nth-child(1) { animation-delay: 0.1s; }
-  .impl-card:nth-child(2) { animation-delay: 0.2s; }
-  .impl-card:nth-child(3) { animation-delay: 0.3s; }
-
-  @keyframes card-appear {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .card-header {
-    padding: 10px 14px;
-    border-bottom: 3px solid var(--ink);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .card-type-badge {
-    font-family: "Space Mono", monospace;
-    font-size: 0.5rem;
-    letter-spacing: 0.15em;
-    background: rgba(0, 0, 0, 0.18);
-    padding: 2px 6px;
-    border-radius: 3px;
-  }
-
-  .card-title {
-    font-size: 1.2rem;
-    letter-spacing: 0.08em;
-  }
-
-  .card-body {
-    padding: 12px 14px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    flex: 1;
-  }
-
-  .impl-tag {
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    opacity: 0.5;
-    display: block;
-    margin-bottom: 4px;
-  }
-
-  .impl-chips {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    margin-bottom: 4px;
-  }
-
-  .chip {
-    background: var(--ink);
-    color: var(--bg);
-    font-family: "Space Mono", monospace;
-    font-size: 0.55rem;
-    letter-spacing: 0.06em;
-    padding: 3px 7px;
-    border-radius: 3px;
-  }
-
-  .impl-text {
-    font-size: 0.62rem;
-    line-height: 1.65;
-    border-top: 2px solid rgba(0, 0, 0, 0.1);
-    padding-top: 8px;
-    color: var(--ink);
   }
 </style>
 
-<script define:vars={{ inputs, outputs, connectors }}>
-  const urlParams = new URLSearchParams(window.location.search);
-  const inputId = urlParams.get("input");
-  const outputId = urlParams.get("output");
-  const connectorId = urlParams.get("connector");
+<script>
+  const stored = sessionStorage.getItem("runtimeChallenge");
 
-  const inputItem = inputs.find((i) => i.id === inputId);
-  const outputItem = outputs.find((i) => i.id === outputId);
-  const connectorItem = connectors.find((i) => i.id === connectorId);
-
-  if (!inputItem || !outputItem || !connectorItem) {
+  if (!stored) {
     window.location.href = "/generate";
   } else {
-    const dashboardText = document.getElementById("dashboard-text");
-    dashboardText.innerHTML =
-      `MAKE A PCB THAT TURNS ` +
-      `<span class="highlight-input">${inputItem.label}</span>` +
-      ` INTO ` +
-      `<span class="highlight-output">${outputItem.label}</span>` +
-      ` AND USES ` +
-      `<span class="highlight-connector">${connectorItem.label}</span>`;
+    const { input, output, connector } = JSON.parse(stored);
 
-    function renderCard(item, color, typeLabel) {
-      return `
-        <div class="impl-card">
-          <div class="card-header" style="background: ${color}">
-            <span class="card-type-badge">${typeLabel}</span>
-            <span class="card-title bebas">${item.label}</span>
-          </div>
-          <div class="card-body">
-            <div>
-              <span class="impl-tag bebas">COMPONENTS</span>
-              <div class="impl-chips">
-                ${item.components.map((c) => `<span class="chip">${c}</span>`).join("")}
-              </div>
-            </div>
-            <div class="impl-text">${item.implementation}</div>
-          </div>
-        </div>
-      `;
+    const dashText = document.getElementById("dashboard-text")
+    if(dashText) {
+        dashText.innerHTML =
+      `MAKE A PCB THAT TURNS ` +
+      `<span class="highlight-input">${input.label}</span>` +
+      ` INTO ` +
+      `<span class="highlight-output">${output.label}</span>` +
+      ` AND USES ` +
+      `<span class="highlight-connector">${connector.label}</span>`;
     }
 
-    const cardsRow = document.getElementById("cards-row");
-    cardsRow.innerHTML =
-      renderCard(inputItem, "var(--yellow)", "INPUT") +
-      renderCard(connectorItem, "var(--teal)", "CONNECTOR") +
-      renderCard(outputItem, "var(--orange)", "OUTPUT");
+    const chipStyle = `
+      background: var(--ink); color: var(--bg);
+      font-family: 'Space Mono', monospace;
+      font-size: 0.55rem; letter-spacing: 0.06em;
+      padding: 3px 7px; border-radius: 3px;
+    `;
+
+    function populateCard(id: string, item: any) {
+      const labelEl = document.getElementById(`${id}-label`);
+      const chipsEl = document.getElementById(`${id}-chips`);
+      const textEl = document.getElementById(`${id}-text`);
+      
+      if (labelEl) labelEl.textContent = item.label;
+      if (chipsEl) chipsEl.innerHTML = item.components
+        .map((c: string) => `<span style="${chipStyle}">${c}</span>`)
+        .join("");
+      if (textEl) textEl.textContent = item.implementation;
+    }
+
+    populateCard("impl-input", input);
+    populateCard("impl-connector", connector);
+    populateCard("impl-output", output);
+
+    setTimeout(() => {
+      const el = document.getElementById("impl-input");
+      if (el) el.classList.add("visible");
+    }, 100);
+    setTimeout(() => {
+      const el = document.getElementById("impl-connector");
+      if (el) el.classList.add("visible");
+    }, 220);
+    setTimeout(() => {
+      const el = document.getElementById("impl-output");
+      if (el) el.classList.add("visible");
+    }, 340);
   }
 </script>
