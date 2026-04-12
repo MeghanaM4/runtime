@@ -32,21 +32,33 @@
       "id": "sound",
       "label": "SOUND LEVEL",
       "image": "/images/components/microphone.png",
-      "components": ["MAX4466 mic breakout", "KY-037 mic module", "INMP441 (I²S)"],
+      "components": [
+        "MAX4466 mic breakout",
+        "KY-037 mic module",
+        "INMP441 (I²S)"
+      ],
       "implementation": "The MAX4466 outputs an analog voltage proportional to sound amplitude — connect its OUT to an ADC pin. Adjust gain with the on-board trimpot. Keep power traces clean and away from digital lines to reduce noise."
     },
     {
       "id": "pressure",
       "label": "PRESSURE",
       "image": "/images/components/bmp280.png",
-      "components": ["BMP280 (I²C)", "MPX5010DP (analog)", "FSR402 force sensor"],
+      "components": [
+        "BMP280 (I²C)",
+        "MPX5010DP (analog)",
+        "FSR402 force sensor"
+      ],
       "implementation": "The BMP280 uses I²C at address 0x76 or 0x77 — add 4.7 kΩ pull-ups on SDA/SCL. For a force-sensitive resistor, wire it as a voltage divider with a 10 kΩ resistor and read on an ADC pin."
     },
     {
       "id": "proximity",
       "label": "PROXIMITY",
       "image": "/images/components/hcsr04.png",
-      "components": ["HC-SR04 ultrasonic", "VL53L0X (I²C laser)", "Sharp GP2Y0A"],
+      "components": [
+        "HC-SR04 ultrasonic",
+        "VL53L0X (I²C laser)",
+        "Sharp GP2Y0A"
+      ],
       "implementation": "HC-SR04: pull TRIG high for 10 µs, then measure how long ECHO stays high. Distance (cm) = duration_µs × 0.034 / 2. The VL53L0X is simpler — it uses I²C and handles all the timing internally."
     },
     {
@@ -69,14 +81,22 @@
       "id": "buzzer",
       "label": "BUZZER",
       "image": "/images/components/buzzer.png",
-      "components": ["Passive piezo buzzer", "Active piezo buzzer", "MLT-8530 SMD"],
+      "components": [
+        "Passive piezo buzzer",
+        "Active piezo buzzer",
+        "MLT-8530 SMD"
+      ],
       "implementation": "Drive a passive buzzer with PWM through a 100 Ω series resistor — vary the frequency to change pitch. An active buzzer only needs a digital HIGH/LOW signal; it generates its own fixed tone internally."
     },
     {
       "id": "binary-leds",
       "label": "BINARY DISPLAY",
       "image": "/images/components/leds.png",
-      "components": ["8× standard LEDs", "0805 SMD LEDs", "220–470 Ω resistors"],
+      "components": [
+        "8× standard LEDs",
+        "0805 SMD LEDs",
+        "220–470 Ω resistors"
+      ],
       "implementation": "Connect 8 LEDs to 8 GPIO output pins, each through a 220–470 Ω current-limiting resistor. Represent the sensor reading in binary: bit 7 on the leftmost LED, bit 0 on the rightmost."
     },
     {
@@ -127,21 +147,32 @@
       "id": "weird-shape",
       "label": "WEIRD SHAPE",
       "image": "/images/components/shape.png",
-      "components": ["Custom Edge.Cuts outline", "Min. internal radius: 0.5 mm"],
+      "components": [
+        "Custom Edge.Cuts outline",
+        "Min. internal radius: 0.5 mm"
+      ],
       "implementation": "Draw your PCB outline on the Edge.Cuts layer in KiCad. Keep all copper, vias, and pads at least 0.5 mm inside the edge. Avoid sharp inside corners — add a ≥ 0.5 mm fillet radius or the router bit will leave a chamfer anyway."
     },
     {
       "id": "big-button",
       "label": "BIG BUTTON",
       "image": "/images/components/button.png",
-      "components": ["12 mm tactile switch", "6 mm push button", "Arcade button (28 mm)"],
+      "components": [
+        "12 mm tactile switch",
+        "6 mm push button",
+        "Arcade button (28 mm)"
+      ],
       "implementation": "Wire one side of the button to a GPIO pin and the other side to GND. Enable the MCU's internal pull-up so the pin reads HIGH when open and LOW when pressed. Add a 20 ms software debounce to ignore contact bounce."
     },
     {
       "id": "usbc-power",
       "label": "USB-C POWER",
       "image": "/images/components/usbc.png",
-      "components": ["USB-C 2.0 SMD receptacle", "2× 5.1 kΩ CC resistors", "500 mA polyfuse"],
+      "components": [
+        "USB-C 2.0 SMD receptacle",
+        "2× 5.1 kΩ CC resistors",
+        "500 mA polyfuse"
+      ],
       "implementation": "Connect VBUS to your power rail through a 500 mA polyfuse, GND to ground. Add 5.1 kΩ resistors from each CC pin (CC1, CC2) to GND — these identify the device as a power sink and enable up to 900 mA from a compliant charger."
     },
     {
@@ -162,14 +193,21 @@
       "id": "rotary-knob",
       "label": "ROTARY KNOB",
       "image": "/images/components/rotary.png",
-      "components": ["EC11 rotary encoder", "Encoder knob cap", "2× 10 kΩ pull-up resistors"],
+      "components": [
+        "EC11 rotary encoder",
+        "Encoder knob cap",
+        "2× 10 kΩ pull-up resistors"
+      ],
       "implementation": "Connect the A and B pins to two GPIOs with 10 kΩ pull-ups (or enable internal pull-ups in firmware). Read the quadrature transitions to determine rotation direction and count. The EC11 also has a push-switch on SW/GND for click input."
     },
     {
       "id": "card-swipe",
       "label": "CARD SWIPE",
       "image": "/images/components/cardswipe.png",
-      "components": ["3-track magnetic card reader head", "ISO 7810 card guide"],
+      "components": [
+        "3-track magnetic card reader head",
+        "ISO 7810 card guide"
+      ],
       "implementation": "A 3-track mag-stripe reader outputs a CARD_PRESENT signal plus serial data pins (one per track). Monitor CARD_PRESENT on a GPIO and read the data pin during the active window. Parse the raw bitstream per ISO 7811 for the encoded data."
     }
   ]
