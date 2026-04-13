@@ -12,12 +12,11 @@ import ImplCard from "../components/ImplCard.astro";
 
     <div class="dashboard-div">
       <div class="dashboard-card">
-        <div class="dashboard-eyebrow bebas">YOUR RUNTIME CHALLENGE</div>
         <p class="dashboard-text bebas" id="dashboard-text"></p>
       </div>
     </div>
 
-    <div class="cards-div">
+    <div class="cards-div mb-[4rem]">
       <div class="cards-col">
         <ImplCard id="impl-input" color="var(--yellow)" typeLabel="INPUT" class="dashboard-impl-card" />
         <ImplCard id="impl-connector" color="var(--teal)" typeLabel="CONNECTOR" class="dashboard-impl-card" />
@@ -78,7 +77,6 @@ import ImplCard from "../components/ImplCard.astro";
     max-width: 800px;
     width: 100%;
     text-align: center;
-    animation: pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   }
 
   .dashboard-eyebrow {
@@ -96,7 +94,7 @@ import ImplCard from "../components/ImplCard.astro";
   }
 
   .dashboard-text .highlight-input {
-    color: var(--yellow);
+    color: yellow;
   }
   .dashboard-text .highlight-output {
     color: var(--orange);
@@ -140,7 +138,7 @@ import ImplCard from "../components/ImplCard.astro";
       `MAKE A PCB THAT TURNS ` +
       `<span class="highlight-input">${input.label}</span>` +
       ` INTO ` +
-      `<span class="highlight-output">${output.label}</span>` +
+      `<span class="highlight-output color-yellow">${output.label}</span>` +
       ` AND USES ` +
       `<span class="highlight-connector">${connector.label}</span>`;
     }

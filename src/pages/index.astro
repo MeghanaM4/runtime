@@ -4,39 +4,31 @@ import "../styles/global.css";
 ---
 
 <Layout title="Runtime">
-  <main class="landing">
-    <div class="hero">
-      <div class="corner tl"></div>
-      <div class="corner tr"></div>
+  <div class="corner tl"></div>
+  <div class="corner tr"></div>
+  <div class="w-full flex flex-col items-center justify-center gap-[4rem]">
+    <div class="flex flex-col mt-[4rem] items-center justify-center">
+      <img
+        src="./logo.png"
+        class="p-[2rem] border-4 w-1/2"
+        style="border-radius: 20px;"
+      />
 
-      <div class="flex flex-col gap-[1rem] absolute mb-[200px] border-4 p-[1rem]" style="border-radius: 0.5rem;">
-        <h1 class="main-title z-20">RUNTIME</h1>
-
-        <p class="subtitle z-20">
-          SPIN FOR YOUR COMPONENTS, MAKE YOUR FIRST PCB
-        </p>
-      </div>
-
-      <img src="./prev.png" style="height: 300px; z-index: 0; margin-top:3rem; margin-left: 8rem;" />
-    </div>
-
-    <div class="stripe-band" role="presentation">
-      <div class="stripe" style="background: var(--pink)"></div>
+      <div class="stripe mt-[4rem]" style="background: var(--pink)"></div>
       <div class="stripe" style="background: var(--orange)"></div>
       <div class="stripe" style="background: var(--yellow)"></div>
     </div>
 
-    <div class="cta-div">
-      <a href="/generate" class="cta-link">
-        <span class="cta-arrow">▶</span>
-        <span class="cta-text blink">PRESS ANY KEY TO START</span>
-        <span class="cta-arrow">◀</span>
-      </a>
+    <div class="flex justify-center mr-[2rem] ml-[2rem] w-[80%]">
+      <img src="./steps.png" class="w-full" />
     </div>
+  </div>
 
-    <div class="corner bl"></div>
-    <div class="corner br"></div>
-  </main>
+  <div class="cta-div mt-[6rem] mb-[2rem] items-center justify-center">
+    <a href="/generate" class="cool-btn items-center justify-center">
+      <span class="cta-text blink">PRESS ANY KEY TO START</span>
+    </a>
+  </div>
 
   <section class="faq-section">
     <h2 class="faq-title bebas">FAQ</h2>
@@ -169,14 +161,6 @@ import "../styles/global.css";
     min-height: 100%;
     overflow-x: hidden;
   }
-
-  .landing {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow-x: hidden;
-  }
-
   .top-banner {
     flex-shrink: 0;
     background: var(--ink);
@@ -191,7 +175,6 @@ import "../styles/global.css";
   .hero {
     flex: 1;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 10px;
@@ -220,20 +203,10 @@ import "../styles/global.css";
     right: 16px;
     border-width: 3px 3px 0 0;
   }
-  .corner.bl {
-    bottom: 16px;
-    left: 16px;
-    border-width: 0 0 3px 3px;
-  }
-  .corner.br {
-    bottom: 16px;
-    right: 16px;
-    border-width: 0 3px 3px 0;
-  }
 
   .main-title {
     font-family: "Helvetica", sans-serif;
-    font-size: clamp(60px, 14vw, 120px);
+    font-size: clamp(60px, 14dvw, 120px);
     color: var(--bg);
     -webkit-text-stroke: 6px var(--ink);
     text-shadow: 8px 8px 0 var(--ink);
@@ -243,7 +216,7 @@ import "../styles/global.css";
   }
 
   .subtitle {
-    font-size: clamp(0.55rem, 1.4vw, 0.75rem);
+    font-size: clamp(0.55rem, 1.4dvw, 0.75rem);
     letter-spacing: 0.22em;
     font-weight: 700;
     opacity: 0.65;
@@ -251,120 +224,6 @@ import "../styles/global.css";
     margin-top: -2px;
   }
 
-  .mini-preview {
-    display: flex;
-    align-items: center;
-    padding: 12px 20px;
-    background: white;
-    border: 3px solid var(--ink);
-    border-radius: 12px;
-    box-shadow: 5px 5px 0 var(--ink);
-    margin-top: 4px;
-  }
-
-  .mini-machine {
-    display: flex;
-    align-items: center;
-  }
-
-  .mini-body {
-    width: 68px;
-    height: 64px;
-    border: 2.5px solid var(--ink);
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 3px 3px 0 var(--ink);
-  }
-
-  .mini-label {
-    font-family: "Bebas Neue", sans-serif;
-    font-size: 0.8rem;
-    letter-spacing: 0.08em;
-    color: var(--ink);
-  }
-
-  .mini-plug {
-    flex-direction: row;
-  }
-  .mini-prongs {
-    display: flex;
-    flex-direction: column;
-    gap: 9px;
-    margin-right: -2px;
-  }
-  .mini-prong {
-    width: 16px;
-    height: 6px;
-    background: #aaa;
-    border: 2px solid var(--ink);
-    border-right: none;
-    border-radius: 0 3px 3px 0;
-  }
-
-  .mini-monitor {
-    flex-direction: column;
-    align-items: center;
-  }
-  .mini-antennae {
-    display: flex;
-    gap: 10px;
-    margin-bottom: -2px;
-    z-index: 1;
-  }
-  .mini-ant {
-    width: 3px;
-    height: 16px;
-    background: var(--ink);
-    border-radius: 2px;
-  }
-  .mini-monitor .mini-body {
-    width: 84px;
-    padding: 5px;
-  }
-  .mini-screen-inset {
-    width: 100%;
-    height: 100%;
-    background: #0d1117;
-    border: 2px solid var(--ink);
-    border-radius: 3px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .mini-stand {
-    width: 14px;
-    height: 9px;
-    background: var(--ink);
-    margin-top: -2px;
-  }
-  .mini-base {
-    width: 40px;
-    height: 5px;
-    background: var(--ink);
-    border-radius: 2px;
-  }
-
-  .mini-speaker {
-    flex-direction: row;
-  }
-  .mini-waves {
-    width: 28px;
-    height: 50px;
-    margin-left: 10px;
-  }
-  .mini-wire {
-    width: 72px;
-    height: 24px;
-    flex-shrink: 0;
-  }
-
-  .stripe-band {
-    display: flex;
-    flex-direction: column;
-    flex-shrink: 0;
-  }
   .stripe {
     height: 16px;
     width: 100%;
@@ -378,37 +237,12 @@ import "../styles/global.css";
     justify-content: center;
   }
 
-  .cta-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 16px;
-    background: var(--ink);
-    color: var(--yellow);
-    border: 4px solid var(--ink);
-    border-radius: 6px;
-    padding: 14px 32px;
-    text-decoration: none;
-    transition:
-      transform 0.1s,
-      box-shadow 0.1s;
-  }
-  .cta-link:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 8px 8px 0 var(--yellow);
-  }
-  .cta-link:active {
-    transform: translate(6px, 6px);
-    box-shadow: 0 0 0 var(--yellow);
-  }
-
   .cta-text {
     font-family: "Bebas Neue", sans-serif;
-    font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+    font-size: 2rem;
     letter-spacing: 0.1em;
   }
-  .cta-arrow {
-    font-size: 1.2rem;
-  }
+
   .blink {
     animation: blink 1.1s step-end infinite;
   }
@@ -421,7 +255,7 @@ import "../styles/global.css";
 
   .faq-title {
     text-align: center;
-    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-size: clamp(2rem, 5dvw, 3.5rem);
     letter-spacing: 0.12em;
     color: var(--yellow);
     margin: 0 0 2.5rem;
@@ -452,7 +286,6 @@ import "../styles/global.css";
 
   .faq-item[open] {
     box-shadow: 4px 4px 0 var(--yellow);
-    animation: faq-card-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
   }
 
   .faq-summary {
@@ -488,9 +321,6 @@ import "../styles/global.css";
     border-radius: 50%;
     flex-shrink: 0;
     position: relative;
-    transition:
-      transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
-      border-color 0.2s;
   }
 
   .faq-icon::before,
@@ -536,8 +366,43 @@ import "../styles/global.css";
     transform-origin: top center;
   }
 
-  .faq-item[open] .faq-body {
-    animation: faq-body-open 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  .cool-btn {
+    background: var(--pink);
+    margin-bottom: 2rem;
+    margin-top: -5rem;
+    height: min-content;
+    color: white;
+    border: 4px solid var(--ink);
+    border-radius: 8px;
+    box-shadow: 6px 6px 0 var(--ink);
+    padding: 14px 48px;
+    font-size: 2rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition:
+      transform 0.1s,
+      box-shadow 0.1s,
+      background 0.15s;
+    user-select: none;
+    flex-shrink: 0;
+  }
+
+  .cool-btn:hover:not(:disabled) {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0 var(--ink);
+    background: #ff1a47;
+  }
+
+  .cool-btn:active:not(:disabled) {
+    transform: translate(6px, 6px);
+    box-shadow: 0 0 0 var(--ink);
+  }
+
+  .cool-btn:disabled {
+    background: #bbb;
+    cursor: not-allowed;
+    box-shadow: 3px 3px 0 var(--ink);
+    color: #888;
   }
 
   @keyframes faq-body-open {
