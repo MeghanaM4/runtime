@@ -61,7 +61,7 @@
       "label": "HEARTBEAT",
       "image": "/components/MAX30102.png",
       "components": ["MAX30102 module", "MAX30102"],
-      "implementation": "MAX30102 module: Use the SparkFun MAX3010x library and run the provided heart-rate example sketch, which handles LED control and peak detection automatically. MAX30102 (IC): Same I²C interface on the bare die — configure LED pulse amplitude and sample rate via registers, then apply a peak-detection or Pan-Tompkins algorithm on the raw IR data in firmware."
+      "implementation": "Connect 8 LEDs to 8 GPIO output pins, each through a 220–470 Ω current-limiting resistor. Represent the sensor reading in binary: bit 7 on the leftmost LED, bit 0 on the rightmost."
     }
   ],
   "outputs": [
@@ -139,7 +139,7 @@
     {
       "id": "toggle",
       "label": "TOGGLE SWITCH",
-      "image": "/components/toggle.png",
+      "image": "/components/toggle.jfif",
       "components": [
         "SPST switches"
       ],

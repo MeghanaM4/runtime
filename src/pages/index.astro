@@ -4,8 +4,10 @@ import "../styles/global.css";
 ---
 
 <Layout title="Runtime">
-  <div class="corner tl"></div>
-  <div class="corner tr"></div>
+
+  <div class="w-[7rem] mt-[1rem] ml-[1rem]">
+    <img src="./hc-flag.png" class="w-full">
+  </div>
   <div class="w-full flex flex-col items-center justify-center gap-[4rem]">
     <div class="flex flex-col mt-[4rem] items-center justify-center">
       <img
@@ -40,33 +42,27 @@ import "../styles/global.css";
             <span class="faq-icon" aria-hidden="true"></span>
           </summary>
           <p class="faq-body">
-            Runtime is a PCB design challenge where you're randomly assigned
-            hardware parameters — an input sensor, output device, and connector
-            type — then build a working circuit board around them.
+            Runtime is Hack Club program where teens can learn how to make a PCB and get the money to build it! You'll spin for an input, output, and connector and you're tasked with making a PCB that uses those 3 parameters.
           </p>
         </details>
 
         <details class="faq-item">
           <summary class="faq-summary">
-            <span class="faq-q bebas">HOW DOES SPINNING WORK?</span>
+            <span class="faq-q bebas">WHO CAN PARTICIPATE?</span>
             <span class="faq-icon" aria-hidden="true"></span>
           </summary>
           <p class="faq-body">
-            Click SPIN! to randomly assign your three parameters. Each spin is
-            fully random. If you don't like the result, use a reroll. When
-            you're satisfied, click GET STARTED to lock in your challenge.
+            Anyone 13-18! No hardware experience required, we have guides to teach you!
           </p>
         </details>
 
         <details class="faq-item">
           <summary class="faq-summary">
-            <span class="faq-q bebas">HOW MANY SPINS DO I GET?</span>
+            <span class="faq-q bebas">WHAT IS HACK CLUB?</span>
             <span class="faq-icon" aria-hidden="true"></span>
           </summary>
           <p class="faq-body">
-            3 spins per session. Each reroll completely replaces your previous
-            parameters. Once you hit GET STARTED, your current roll is locked in
-            as your official challenge.
+            Hack Club is a non-profit organization and a community of 100k+ teenage makers. We run events online and in-person that reward people making open source projects. Thanks to our donors we are always running crazy events at no cost for teens. Previously we ran;
           </p>
         </details>
       </div>
@@ -74,77 +70,31 @@ import "../styles/global.css";
       <div class="faq-col">
         <details class="faq-item">
           <summary class="faq-summary">
-            <span class="faq-q bebas">WHAT HARDWARE DO I NEED?</span>
+            <span class="faq-q bebas">IS THIS FREE?</span>
             <span class="faq-icon" aria-hidden="true"></span>
           </summary>
           <p class="faq-body">
-            A microcontroller (Arduino, RP2040, or similar), the components
-            listed on your parameter cards, a soldering iron, and PCB design
-            software. Prototyping on a breadboard first is strongly recommended.
+            Yep! Hack Club programs are free to participate in. For Runtime, all you have to do is spend 5 hours designing your PCB and we'll send you a $20 grant to manufacture your board!
           </p>
         </details>
 
         <details class="faq-item">
           <summary class="faq-summary">
-            <span class="faq-q bebas">WHAT ARE THE INPUT OPTIONS?</span>
+            <span class="faq-q bebas">I DON'T KNOW HARDWARE</span>
             <span class="faq-icon" aria-hidden="true"></span>
           </summary>
           <p class="faq-body">
-            Eight sensors: humidity, temperature, light level, motion (PIR),
-            sound level, barometric pressure, proximity, and magnetic field.
-            Each card includes recommended components and wiring notes.
+            That's okay! We have guides made for beginners, and there are thousands of teenagers just like you who are learning right along side you on the Hack Club Slack. Runtime is made for beginners, and we want more teens building hardware!
           </p>
         </details>
 
         <details class="faq-item">
           <summary class="faq-summary">
-            <span class="faq-q bebas">WHAT ARE THE OUTPUT OPTIONS?</span>
+            <span class="faq-q bebas">WHAT DO I SUBMIT?</span>
             <span class="faq-icon" aria-hidden="true"></span>
           </summary>
           <p class="faq-body">
-            Eight devices: LED array, buzzer, binary LED display, Morse code
-            blinker, LCD screen, servo motor, RGB LED matrix, and 7-segment
-            display. The dashboard shows implementation details for whichever
-            you roll.
-          </p>
-        </details>
-      </div>
-
-      <div class="faq-col">
-        <details class="faq-item">
-          <summary class="faq-summary">
-            <span class="faq-q bebas">WHAT CONNECTOR TYPES ARE THERE?</span>
-            <span class="faq-icon" aria-hidden="true"></span>
-          </summary>
-          <p class="faq-body">
-            Eight form factors: keychain, freeform shape cutout, big arcade
-            button, USB-C power delivery, badge clip, fridge magnet, rotary
-            encoder knob, and card swipe strip.
-          </p>
-        </details>
-
-        <details class="faq-item">
-          <summary class="faq-summary">
-            <span class="faq-q bebas">HOW LONG DOES A BUILD TAKE?</span>
-            <span class="faq-icon" aria-hidden="true"></span>
-          </summary>
-          <p class="faq-body">
-            Design and fabrication typically takes 2–6 hours depending on
-            complexity and experience level. Most people prototype on a
-            breadboard first, then commit to a PCB layout once the circuit is
-            confirmed working.
-          </p>
-        </details>
-
-        <details class="faq-item">
-          <summary class="faq-summary">
-            <span class="faq-q bebas">DO I NEED PCB EXPERIENCE?</span>
-            <span class="faq-icon" aria-hidden="true"></span>
-          </summary>
-          <p class="faq-body">
-            Not at all. Runtime is designed as a first PCB challenge. Each
-            parameter card includes component suggestions and wiring guidance to
-            get you started — that's kind of the whole point.
+            All your design and production files should be in a GitHub repo, along with your firmware. Your journals should also be in your repo (written in markdown).
           </p>
         </details>
       </div>
