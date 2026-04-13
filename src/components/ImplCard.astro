@@ -11,12 +11,11 @@ const { id, color, typeLabel, class: className } = Astro.props;
 
 <div class:list={["impl-card", className]} id={id}>
   <div class="card-header" style={`background: ${color}`}>
-    <span class="card-type-badge">{typeLabel}</span>
     <span class="card-title bebas" id={`${id}-label`}></span>
   </div>
   <div class="card-body">
     <div class="impl-components">
-      <span class="impl-tag bebas">COMPONENTS</span>
+      <span class="impl-tag bebas">POSSIBLE COMPONENTS</span>
       <div class="impl-chips" id={`${id}-chips`}></div>
     </div>
     <div class="impl-text" id={`${id}-text`}></div>

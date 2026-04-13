@@ -1,137 +1,110 @@
 {
   "inputs": [
     {
-      "id": "humidity",
-      "label": "HUMIDITY",
-      "image": "/images/components/dht22.png",
-      "components": ["DHT22", "DHT11", "SHT31-D"],
-      "implementation": "Connect the data pin to any GPIO with a 4.7 kΩ pull-up resistor to VCC. Power at 3.3 V or 5 V. Wait at least 2 s between readings — the sensor is slow by design."
-    },
-    {
       "id": "temperature",
       "label": "TEMPERATURE",
-      "image": "/images/components/ds18b20.png",
-      "components": ["DS18B20", "NTC thermistor + 10 kΩ", "LM35"],
-      "implementation": "DS18B20 uses 1-Wire — connect its data line to a GPIO with a 4.7 kΩ pull-up to VCC. For an NTC thermistor, form a voltage divider with a 10 kΩ fixed resistor and read the midpoint with an ADC pin."
+      "image": "/components/DS18B20.png",
+      "components": ["DS18B20 module", "DS18B20"],
+      "implementation": "The DS18B20 module communicates over a single data wire using the 1-Wire protocol — just pull the data line high with a 4.7kΩ resistor and use any Dallas/OneWire library to request a conversion and read back the result. The bare DS18B20 IC works identically, just wire VDD, GND, and DQ the same way, keeping the pull-up resistor close to the pin."
     },
     {
       "id": "light",
       "label": "LIGHT",
-      "image": "/images/components/ldr.png",
-      "components": ["LDR (photoresistor)", "TEMT6000", "BH1750"],
-      "implementation": "Wire an LDR in a voltage divider with a 10 kΩ resistor and read the midpoint on an ADC pin. The BH1750 is a better choice for calibrated lux: use I²C at address 0x23."
+      "image": "/components/BH1750.png",
+      "components": ["BH1750 module", "VEML6030"],
+      "implementation": "Wire the BH1750 breakout to your microcontroller's I²C bus, set the ADDR pin low for address 0x23, and send a single measurement mode command before reading back the two-byte lux value. The VEML6030 IC is drop-in similar over I²C, but consult its register map to configure gain and integration time for your lighting conditions before reading the ALS output register."
     },
     {
-      "id": "movement",
-      "label": "MOVEMENT",
-      "image": "/images/components/pir.png",
-      "components": ["HC-SR501 PIR", "RCWL-0516 radar", "MPU-6050 IMU"],
+      "id": "motion",
+      "label": "MOTION",
+      "image": "/components/HC-SR501.png",
+      "components": ["HC-SR501", "AMS312"],
       "implementation": "The HC-SR501 outputs a digital HIGH on its OUT pin when motion is detected. Power it at 5 V and connect OUT to any GPIO. Adjust sensitivity and hold-time with the two on-board trimpots."
     },
     {
       "id": "sound",
       "label": "SOUND LEVEL",
-      "image": "/images/components/microphone.png",
-      "components": [
-        "MAX4466 mic breakout",
-        "KY-037 mic module",
-        "INMP441 (I²S)"
-      ],
+      "image": "/components/KY-037.png",
+      "components": ["KY-037 / KY-038", "MAX4466"],
       "implementation": "The MAX4466 outputs an analog voltage proportional to sound amplitude — connect its OUT to an ADC pin. Adjust gain with the on-board trimpot. Keep power traces clean and away from digital lines to reduce noise."
-    },
-    {
-      "id": "pressure",
-      "label": "PRESSURE",
-      "image": "/images/components/bmp280.png",
-      "components": [
-        "BMP280 (I²C)",
-        "MPX5010DP (analog)",
-        "FSR402 force sensor"
-      ],
-      "implementation": "The BMP280 uses I²C at address 0x76 or 0x77 — add 4.7 kΩ pull-ups on SDA/SCL. For a force-sensitive resistor, wire it as a voltage divider with a 10 kΩ resistor and read on an ADC pin."
-    },
-    {
-      "id": "proximity",
-      "label": "PROXIMITY",
-      "image": "/images/components/hcsr04.png",
-      "components": [
-        "HC-SR04 ultrasonic",
-        "VL53L0X (I²C laser)",
-        "Sharp GP2Y0A"
-      ],
-      "implementation": "HC-SR04: pull TRIG high for 10 µs, then measure how long ECHO stays high. Distance (cm) = duration_µs × 0.034 / 2. The VL53L0X is simpler — it uses I²C and handles all the timing internally."
     },
     {
       "id": "magnetic",
       "label": "MAGNETIC FIELD",
-      "image": "/images/components/hall.png",
-      "components": ["A3144 Hall sensor", "49E linear Hall", "QMC5883L (I²C)"],
-      "implementation": "The A3144 digital Hall sensor outputs LOW when a magnet is nearby and HIGH otherwise. Connect VCC to 5 V, GND to ground, and OUT to a GPIO with the internal pull-up enabled in firmware."
+      "image": "/components/QMC5883L.png",
+      "components": ["QMC5883L module", "QMC5883L"],
+      "implementation": "QMC5883L module: Connect via I²C and use the QMC5883LCompass library to get calibrated heading and raw field strength on all three axes. QMC5883L (IC): Same I²C interface on the bare QFN chip — add 100nF decoupling caps and pull-ups on SDA/SCL, and calibrate for hard-iron offset in software."
+    },
+    {
+      "id": "moisture",
+      "label": "MOISTURE",
+      "image": "/components/DHT11.png",
+      "components": ["DHT11 module", "SHT40A-AD1B-R2"],
+      "implementation": "DHT11 module: Use the DHT library with a single data pin and read both temperature and humidity with one dht.read() call. SHT40A-AD1B-R2 (IC): Communicate over I²C using the fixed address 0x44, send a measure command, wait ~10ms, then read 6 bytes of raw temperature and humidity data."
+    },
+    {
+      "id": "rotation",
+      "label": "ROTATION",
+      "image": "/components/AS5600.png",
+      "components": ["AS5600 module", "AS5600"],
+      "implementation": "AS5600 module: Place a diametrically magnetized magnet above the chip, connect via I²C, and read the 12-bit ANGLE register for absolute position. AS5600 (IC): Same register map on the bare SOIC package — ensure the magnet is centered axially within ~3mm for accurate readings."
+    },
+    {
+      "id": "acceleration",
+      "label": "ACCELERATION",
+      "image": "/components/ADXL345.png",
+      "components": ["ADXL345 module", "LIS2DH12"],
+      "implementation": "ADXL345 module: Use the Adafruit ADXL345 library over I²C or SPI to get calibrated acceleration in m/s² on all three axes immediately. LIS2DH12 (IC): Initialize over I²C by setting the CTRL_REG1 register to enable axes and set ODR, then read 6 bytes from the output registers for X/Y/Z."
+    },
+    {
+      "id": "heartbeat",
+      "label": "HEARTBEAT",
+      "image": "/components/MAX30102.png",
+      "components": ["MAX30102 module", "MAX30102"],
+      "implementation": "MAX30102 module: Use the SparkFun MAX3010x library and run the provided heart-rate example sketch, which handles LED control and peak detection automatically. MAX30102 (IC): Same I²C interface on the bare die — configure LED pulse amplitude and sample rate via registers, then apply a peak-detection or Pan-Tompkins algorithm on the raw IR data in firmware."
     }
   ],
   "outputs": [
     {
-      "id": "led-array",
-      "label": "LED ARRAY",
-      "image": "/images/components/neopixel.png",
-      "components": ["WS2812B NeoPixels", "SK6812", "APA102 (SPI)"],
+      "id": "music",
+      "label": "MUSIC",
+      "image": "/components/PAM8403.png",
+      "components": ["PAM8403 mini amp board"],
       "implementation": "Put a 300–500 Ω resistor in series on the data line close to the MCU. Add a 100–470 µF capacitor across VCC and GND near the first pixel. Power from 5 V; add a level-shifter if your MCU runs at 3.3 V."
     },
     {
       "id": "buzzer",
       "label": "BUZZER",
-      "image": "/images/components/buzzer.png",
-      "components": [
-        "Passive piezo buzzer",
-        "Active piezo buzzer",
-        "MLT-8530 SMD"
-      ],
+      "image": "/components/KY-006.png",
+      "components": ["Passive piezo buzzer", "KY-006"],
       "implementation": "Drive a passive buzzer with PWM through a 100 Ω series resistor — vary the frequency to change pitch. An active buzzer only needs a digital HIGH/LOW signal; it generates its own fixed tone internally."
     },
     {
-      "id": "binary-leds",
-      "label": "BINARY DISPLAY",
-      "image": "/images/components/leds.png",
-      "components": [
-        "8× standard LEDs",
-        "0805 SMD LEDs",
-        "220–470 Ω resistors"
-      ],
+      "id": "binary",
+      "label": "BINARY",
+      "image": "/components/binary.jfif",
+      "components": ["Single LED", "Piezo buzzer"],
       "implementation": "Connect 8 LEDs to 8 GPIO output pins, each through a 220–470 Ω current-limiting resistor. Represent the sensor reading in binary: bit 7 on the leftmost LED, bit 0 on the rightmost."
     },
     {
       "id": "morse",
       "label": "MORSE CODE",
-      "image": "/images/components/led-single.png",
-      "components": ["Single LED + 330 Ω resistor", "Piezo buzzer (optional)"],
+      "image": "/components/morse.png",
+      "components": ["Single LED", "Piezo buzzer"],
       "implementation": "Blink a single GPIO output. Convention: dot = 100 ms ON, dash = 300 ms ON, gap between symbols = 100 ms OFF, gap between letters = 300 ms OFF. Encode your sensor value as a number in Morse."
     },
     {
-      "id": "lcd",
-      "label": "LCD SCREEN",
-      "image": "/images/components/lcd.png",
-      "components": ["16×2 I²C LCD (PCF8574)", "0.96\" OLED SSD1306"],
-      "implementation": "The I²C LCD backpack typically sits at address 0x27 — connect SDA/SCL with 4.7 kΩ pull-ups. Call lcd.print() to display values. Twist the trimpot on the back to adjust contrast after soldering."
-    },
-    {
-      "id": "servo",
-      "label": "SERVO MOTOR",
-      "image": "/images/components/servo.png",
-      "components": ["SG90 micro servo", "MG996R standard servo"],
-      "implementation": "Generate a 50 Hz PWM signal. Pulse width ~1 ms = 0°, ~1.5 ms = 90°, ~2 ms = 180°. Power the servo from VCC (5 V), not from the MCU's regulated rail — servos draw high current on movement."
-    },
-    {
-      "id": "rgb-matrix",
-      "label": "RGB MATRIX",
-      "image": "/images/components/ledmatrix.png",
-      "components": ["MAX7219 8×8 matrix module", "HT16K33 bicolor matrix"],
+      "id": "led-matrix",
+      "label": "LED MATRIX",
+      "image": "/components/matrix.png",
+      "components": ["MAX7219 8×8 LED matrix module"],
       "implementation": "The MAX7219 uses SPI (DIN, CS, CLK). On startup, configure the scan-limit register (0x0B) and intensity register (0x0A), then clear the display. Each row register (0x01–0x08) holds one byte of pixel data."
     },
     {
       "id": "7segment",
-      "label": "7-SEGMENT",
-      "image": "/images/components/7seg.png",
-      "components": ["TM1637 4-digit module", "MAX7219 + 7-seg display"],
+      "label": "7-SEGMENT DISPLAY",
+      "image": "/components/7seg.png",
+      "components": ["TM1637 4-digit module"],
       "implementation": "The TM1637 uses a 2-wire interface (CLK and DIO) — not standard I²C. Use a TM1637 library to display integers or floats directly. The module handles multiplexing internally; no extra resistors needed."
     }
   ],
@@ -139,76 +112,47 @@
     {
       "id": "keychain",
       "label": "KEYCHAIN",
-      "image": "/images/components/keychain.png",
+      "image": "/components/keychain.jpg",
       "components": ["2× M3 mounting holes", "Split ring or carabiner"],
       "implementation": "Add two 3.2 mm drill holes (MountingHole_3.2mm_M3 footprint in KiCad) near one edge of the board, at least 3 mm from any copper trace. Loop a split ring or small carabiner through one hole after fabrication."
     },
     {
-      "id": "weird-shape",
-      "label": "WEIRD SHAPE",
-      "image": "/images/components/shape.png",
-      "components": [
-        "Custom Edge.Cuts outline",
-        "Min. internal radius: 0.5 mm"
-      ],
-      "implementation": "Draw your PCB outline on the Edge.Cuts layer in KiCad. Keep all copper, vias, and pads at least 0.5 mm inside the edge. Avoid sharp inside corners — add a ≥ 0.5 mm fillet radius or the router bit will leave a chamfer anyway."
-    },
-    {
-      "id": "big-button",
-      "label": "BIG BUTTON",
-      "image": "/images/components/button.png",
+      "id": "pushbutton",
+      "label": "PUSHBUTTON",
+      "image": "/components/button.jfif",
       "components": [
         "12 mm tactile switch",
         "6 mm push button",
-        "Arcade button (28 mm)"
+        "Cherry MX Switch"
       ],
       "implementation": "Wire one side of the button to a GPIO pin and the other side to GND. Enable the MCU's internal pull-up so the pin reads HIGH when open and LOW when pressed. Add a 20 ms software debounce to ignore contact bounce."
     },
     {
-      "id": "usbc-power",
-      "label": "USB-C POWER",
-      "image": "/images/components/usbc.png",
-      "components": [
-        "USB-C 2.0 SMD receptacle",
-        "2× 5.1 kΩ CC resistors",
-        "500 mA polyfuse"
-      ],
-      "implementation": "Connect VBUS to your power rail through a 500 mA polyfuse, GND to ground. Add 5.1 kΩ resistors from each CC pin (CC1, CC2) to GND — these identify the device as a power sink and enable up to 900 mA from a compliant charger."
-    },
-    {
-      "id": "badge-clip",
-      "label": "BADGE CLIP",
-      "image": "/images/components/badge.png",
-      "components": ["25 mm badge clip hardware", "2× M2.5 mounting holes"],
-      "implementation": "Place two 2.7 mm drill holes 25 mm apart along the top edge to match a standard badge clip. Keep a 5 mm keepout zone around the holes clear of copper. Alternatively, add a 4.5 mm slot for a lanyard loop."
-    },
-    {
-      "id": "fridge-magnet",
-      "label": "FRIDGE MAGNET",
-      "image": "/images/components/magnet.png",
-      "components": ["N35 disc magnets 6×2 mm", "Double-sided foam tape"],
-      "implementation": "Design the PCB at standard 1.6 mm thickness. Leave the bottom side clear of tall components near the center. Glue 2–4 neodymium disc magnets (6×2 mm) symmetrically to the back with epoxy or foam tape so the board hangs level."
-    },
-    {
       "id": "rotary-knob",
       "label": "ROTARY KNOB",
-      "image": "/images/components/rotary.png",
+      "image": "/components/ec11.png",
       "components": [
-        "EC11 rotary encoder",
-        "Encoder knob cap",
-        "2× 10 kΩ pull-up resistors"
+        "EC11 rotary encoder"
       ],
       "implementation": "Connect the A and B pins to two GPIOs with 10 kΩ pull-ups (or enable internal pull-ups in firmware). Read the quadrature transitions to determine rotation direction and count. The EC11 also has a push-switch on SW/GND for click input."
     },
     {
-      "id": "card-swipe",
-      "label": "CARD SWIPE",
-      "image": "/images/components/cardswipe.png",
+      "id": "toggle",
+      "label": "TOGGLE SWITCH",
+      "image": "/components/toggle.png",
       "components": [
-        "3-track magnetic card reader head",
-        "ISO 7810 card guide"
+        "SPST switches"
       ],
-      "implementation": "A 3-track mag-stripe reader outputs a CARD_PRESENT signal plus serial data pins (one per track). Monitor CARD_PRESENT on a GPIO and read the data pin during the active window. Parse the raw bitstream per ISO 7811 for the encoded data."
+      "implementation": "Place the switch in series with your signal or power line, connecting one pad to the source and the other to the load, with a pull-down (or pull-up) resistor to keep the input pin at a defined logic level when the switch is open."
+    },
+    {
+      "id": "3way",
+      "label": "3-WAY SWITCH",
+      "image": "/components/3way.jfif",
+      "components": [
+        "EC11 rotary encoder"
+      ],
+      "implementation": "Route the traveler traces carefully to avoid accidental shorts, use an SW_SPDT footprint for each switch, and verify the logic with a truth table in your schematic before laying out the board since the crossing connections can be unintuitive."
     }
   ]
 }
