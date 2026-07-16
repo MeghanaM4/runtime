@@ -2,12 +2,13 @@
 import Layout from "../layouts/Layout.astro";
 import ImplCard from "../components/ImplCard.astro";
 import params from "../data/parameters.json";
+import FuzzyText from "../components/FuzzyText";
 
 const { inputs, outputs, connectors } = params;
 ---
 
 <Layout title="Get Your Parameters">
-  <main class="generate-page">
+  <main class="generate-page h-[100vh]">
     <nav class="nav-bar">
       <a href="/" class="nav-back bebas">← BACK</a>
       <span class="nav-title bebas">RUNTIME</span>
@@ -18,8 +19,18 @@ const { inputs, outputs, connectors } = params;
         <span class="roll-pip" id="pip-2"></span>
       </div>
     </nav>
-    <div class="w-full flex items-center justify-center mt-[1rem] text-[1.5rem]">
-      <span>MAKE A PCB THAT HAS...</span>
+
+    <div class="w-full flex items-center justify-center text-[1.5rem]" style="margin-top: calc(10vh - 1rem); margin-bottom: calc(10vh - 1rem)">
+      <FuzzyText
+          text="spin the machine for your parts!"
+          client:idle
+          baseIntensity={0.05}
+          hoverIntensity={0.15}
+          color="#000000"
+          fontSize="2rem"
+          clickEffect="true"
+          className="w-fit"
+        />
     </div>
 
     <div class="machines-div h-fit">
@@ -234,7 +245,7 @@ const { inputs, outputs, connectors } = params;
   .machines-row {
     display: flex;
     align-items: flex-start;
-    gap: 10vw;
+    gap: calc(10vw - 100px);
   }
 
   .machine-col {
@@ -259,8 +270,8 @@ const { inputs, outputs, connectors } = params;
   }
 
   .machine-body {
-    width: 190px;
-    height: 260px;
+    width: 15vw;
+    height: 40vh;
     border: 4px solid var(--ink);
     border-radius: 4px;
     box-shadow: 7px 7px 0 var(--ink);
@@ -587,6 +598,7 @@ const { inputs, outputs, connectors } = params;
   function showImplCard(machineKey, result) {
     const m = machines[machineKey];
     m.label.textContent = result.label;
+    localStorage.setItem(machineKey, result.label);
     m.chips.innerHTML = result.components
       .map(
         (c) => `<span style="
@@ -668,7 +680,7 @@ const { inputs, outputs, connectors } = params;
       spinBtnText.textContent = "NO ROLLS LEFT";
     }
 
-    sessionStorage.setItem(
+    localStorage.setItem(
       "runtimeChallenge",
       JSON.stringify({
         input: inputRes,

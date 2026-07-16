@@ -244,7 +244,7 @@ import ImplCard from "../components/ImplCard.astro";
 </style>
 
 <script>
-  const stored = sessionStorage.getItem("runtimeChallenge");
+  const stored = localStorage.getItem("runtimeChallenge");
 
   if (!stored) {
     window.location.href = "/generate";
@@ -255,11 +255,11 @@ import ImplCard from "../components/ImplCard.astro";
     if (dashText) {
       dashText.innerHTML =
         `MAKE A PCB THAT TURNS ` +
-        `<span class="highlight-input">${input.label}</span>` +
+        `<span class="highlight-input">${localStorage.getItem("input")}</span>` +
         ` INTO ` +
-        `<span class="highlight-output color-yellow">${output.label}</span>` +
+        `<span class="highlight-output color-yellow">${localStorage.getItem("output")}</span>` +
         ` AND USES A ` +
-        `<span class="highlight-connector">${connector.label}</span>`;
+        `<span class="highlight-connector">${localStorage.getItem("connector")}</span>`;
     }
 
     const chipStyle = `
