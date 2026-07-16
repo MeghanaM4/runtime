@@ -1,34 +1,68 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import "../styles/global.css";
+import FuzzyText from "../components/FuzzyText";
 ---
 
 <Layout title="Runtime">
+  <img src="./hc-flag.png" class="absolute w-[10vw] left-[1rem] top-[1rem]" />
 
-  <div class="w-[7rem] mt-[1rem] ml-[1rem]">
-    <img src="./hc-flag.png" class="w-full">
-  </div>
   <div class="w-full flex flex-col items-center justify-center gap-[4rem]">
-    <div class="flex flex-col mt-[4rem] items-center justify-center">
+    <div class="flex flex-col mt-[2rem] items-center justify-center">
       <img
         src="./logo.png"
         class="p-[2rem] border-4 w-1/2"
         style="border-radius: 20px;"
       />
 
+      <div class="w-min flex flex-col gap-[1.5rem]" style="margin-top: calc(10vh - 1rem)">
+        <FuzzyText
+          text="spend 5 hours making a printed circuit board"
+          client:idle
+          baseIntensity={0.05}
+          hoverIntensity={0.15}
+          color="#000000"
+          fontSize="2rem"
+          clickEffect="true"
+          className="w-fit"
+        />
+        <FuzzyText
+          text="we'll send you $20 to build it"
+          client:idle
+          baseIntensity={0.05}
+          hoverIntensity={0.15}
+          color="#000000"
+          fontSize="2rem"
+          clickEffect="true"
+          className="w-fit"
+        />
+      </div>
+      <p class="text-[13px] mt-[1rem]">no experience required. teens 13-18 only.</p>
+
       <div class="stripe mt-[4rem]" style="background: var(--pink)"></div>
       <div class="stripe" style="background: var(--orange)"></div>
       <div class="stripe" style="background: var(--yellow)"></div>
     </div>
 
-    <div class="flex justify-center mr-[2rem] ml-[2rem] w-[80%]">
+    <div
+      class="flex flex-col justify-center items-center gap-[2rem] mr-[2rem] ml-[2rem] w-[80%]"
+    >
+      <FuzzyText
+          text="How does it work?"
+          client:idle
+          baseIntensity={0.05}
+          hoverIntensity={0.1}
+          color="#000000"
+          fontSize="2.5rem"
+          clickEffect="true"
+        />
       <img src="./steps.png" class="w-full" />
     </div>
   </div>
 
   <div class="cta-div mt-[6rem] mb-[2rem] items-center justify-center">
     <a href="/generate" class="cool-btn items-center justify-center">
-      <span class="cta-text blink">PRESS ANY KEY TO START</span>
+      <span class="cta-text blink">START NOW</span>
     </a>
   </div>
 
@@ -42,7 +76,10 @@ import "../styles/global.css";
             <span class="faq-icon" aria-hidden="true"></span>
           </summary>
           <p class="faq-body">
-            Runtime is Hack Club program where teens can learn how to make a PCB and get the money to build it! You'll spin for an input, output, and connector and you're tasked with making a PCB that uses those 3 parameters.
+            Runtime is Hack Club program where teens can learn how to make a PCB
+            and get the money to build it! You'll spin for an input, output, and
+            connector and you're tasked with making a PCB that uses those 3
+            parameters.
           </p>
         </details>
 
@@ -52,7 +89,8 @@ import "../styles/global.css";
             <span class="faq-icon" aria-hidden="true"></span>
           </summary>
           <p class="faq-body">
-            Anyone 13-18! No hardware experience required, we have guides to teach you!
+            Anyone 13-18! No hardware experience required, we have guides to
+            teach you!
           </p>
         </details>
 
@@ -62,7 +100,10 @@ import "../styles/global.css";
             <span class="faq-icon" aria-hidden="true"></span>
           </summary>
           <p class="faq-body">
-            Hack Club is a non-profit organization and a community of 100k+ teenage makers. We run events online and in-person that reward people making open source projects. Thanks to our donors we are always running crazy events at no cost for teens. Previously we ran;
+            Hack Club is a non-profit organization and a community of 100k+
+            teenage makers. We run events online and in-person that reward
+            people making open source projects. Thanks to our donors we are
+            always running crazy events at no cost for teens. Previously we ran;
           </p>
         </details>
       </div>
@@ -74,7 +115,9 @@ import "../styles/global.css";
             <span class="faq-icon" aria-hidden="true"></span>
           </summary>
           <p class="faq-body">
-            Yep! Hack Club programs are free to participate in. For Runtime, all you have to do is spend 5 hours designing your PCB and we'll send you a $20 grant to manufacture your board!
+            Yep! Hack Club programs are free to participate in. For Runtime, all
+            you have to do is spend 5 hours designing your PCB and we'll send
+            you a $20 grant to manufacture your board!
           </p>
         </details>
 
@@ -84,7 +127,10 @@ import "../styles/global.css";
             <span class="faq-icon" aria-hidden="true"></span>
           </summary>
           <p class="faq-body">
-            That's okay! We have guides made for beginners, and there are thousands of teenagers just like you who are learning right along side you on the Hack Club Slack. Runtime is made for beginners, and we want more teens building hardware!
+            That's okay! We have guides made for beginners, and there are
+            thousands of teenagers just like you who are learning right along
+            side you on the Hack Club Slack. Runtime is made for beginners, and
+            we want more teens building hardware!
           </p>
         </details>
 
@@ -94,7 +140,9 @@ import "../styles/global.css";
             <span class="faq-icon" aria-hidden="true"></span>
           </summary>
           <p class="faq-body">
-            All your design and production files should be in a GitHub repo, along with your firmware. Your journals should also be in your repo (written in markdown).
+            All your design and production files should be in a GitHub repo,
+            along with your firmware. Your journals should also be in your repo
+            (written in markdown).
           </p>
         </details>
       </div>
@@ -395,25 +443,6 @@ import "../styles/global.css";
 </style>
 
 <script>
-  const go = () => {
-    window.location.href = "/generate";
-  };
-
-  document.addEventListener("keydown", (e) => {
-    if (window.scrollY > 80) return;
-    if (
-      !["Tab", "Escape", "F1", "F5", "F11", "F12", "Alt", "Control"].includes(
-        e.key,
-      )
-    )
-      go();
-  });
-
-  document.addEventListener("click", (e) => {
-    const target = e.target as HTMLElement;
-    if (!target.closest("a") && !target.closest(".faq-section")) go();
-  });
-
   // Accordion: only one item open at a time
   const faqItems = document.querySelectorAll<HTMLDetailsElement>(".faq-item");
   faqItems.forEach((item) => {
