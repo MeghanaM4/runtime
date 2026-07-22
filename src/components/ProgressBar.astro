@@ -1,0 +1,114 @@
+---
+// ProgressBar.astro
+// Scroll-driven vertical progress rail for the Runtime guide pages.
+// Fills as the reader scrolls down, empties as they scroll back up —
+// tied directly to scroll position rather than incremented, so it's
+// accurate in both directions no matter where the page is reloaded at.
+//
+// Usage:
+//   ---
+//   import ProgressBar from '../components/ProgressBar.astro';
+//   ---
+//   <ProgressBar accent="var(--orange)" />
+//
+// `accent` accepts any valid CSS color (a hex value, a var() reference
+// into your global tokens, etc.) and defaults to the Runtime teal.
+
+interface Props {
+  accent?: string;
+}
+
+const { accent = 'var(--teal, #00AABB)' } = Astro.props;
+---
+
+<div class="progress-rail" style={`--bar-accent: ${accent};`}>
+  <div class="progress-fill"></div>
+</div>
+<div class="progress-tick">0%</div>
+
+<style>
+  .progress-rail {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 10px;
+    height: 100vh;
+    background: rgba(23, 23, 23, 0.08);
+    border-right: 3px solid var(--ink, #171717);
+    z-index: 100;
+  }
+  @media (max-width: 640px) {
+    .progress-rail {
+      width: 7px;
+    }
+  }
+
+  .progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0%; /* set by the script below — grows downward: 0% = top, 100% = bottom */
+    background: var(--bar-accent);
+    transition: height 60ms linear;
+  }
+
+  .progress-tick {
+    position: fixed;
+    left: 16px;
+    top: 18px;
+    transform: translateY(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    background: var(--ink, #171717);
+    color: var(--cream, #fffcef);
+    padding: 2px 7px;
+    border-radius: 6px;
+    z-index: 101;
+    pointer-events: none;
+  }
+  @media (max-width: 640px) {
+    .progress-tick {
+      left: 11px;
+      font-size: 9px;
+      padding: 2px 5px;
+    }
+  }
+</style>
+
+<script>
+  // Astro hoists + bundles this once per page and runs it after parsing,
+  // so it's safe to just wire the listeners up top-level here.
+  function initProgressBar(): void {
+    const fill = document.querySelector<HTMLElement>('.progress-fill');
+    const tick = document.querySelector<HTMLElement>('.progress-tick');
+    if (!fill) return;
+
+    function update() {
+      const doc = document.documentElement;
+      const scrollTop = window.scrollY || doc.scrollTop;
+      const scrollable = doc.scrollHeight - doc.clientHeight;
+      let pct = scrollable > 0 ? (scrollTop / scrollable) * 100 : 0;
+      pct = Math.max(0, Math.min(100, pct));
+
+      fill.style.height = pct + '%';
+
+      if (tick) {
+        tick.textContent = Math.round(pct) + '%';
+        const railHeight = window.innerHeight;
+        // fill grows top -> down now, so the tick tracks its leading
+        // (bottom) edge: top at 0%, bottom of screen at 100%
+        let tickTop = (pct / 100) * railHeight;
+        tickTop = Math.max(18, Math.min(railHeight - 18, tickTop));
+        tick.style.top = tickTop + 'px';
+      }
+    }
+
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  }
+
+  initProgressBar();
+</script>

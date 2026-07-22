@@ -1,0 +1,50 @@
+---
+stepNum: 8
+title: "Firmware Debugging"
+sub: "// it's (probably) not broken"
+accent: "var(--teal)"
+prevHref: "step7"
+prevLabel: "Step 7: Order Your PCB"
+---
+
+If your board doesn't instantly power on, don't assume it's dead just because nothing happens immediately. Work through this list before you panic:
+
+## Check power first
+
+Use a multimeter confirm your microcontroller and each component are actually getting the voltage they expect. This rules out the most common failure mode instantly (not receving power because of USB or battery issue).
+
+## Double-check part orientation
+
+Especially anything assembled by JLCPCB or soldered by hand yourself. A part placed backward is the single most common reason a "correctly designed" board doesn't work. The first pin of a chip should match the dot that's on the silkscreen in your PCB editor
+
+<div class="gif-slot">
+<img style="height:60vh" src="/guide/8.1.png"></img>
+</div>
+
+## Confirm your I2C addresses match reality
+
+If two parts on your board happen to share a default address, you'll get garbage or nothing back. An I2C scanner sketch (easy to find online) lists every address actually responding on your bus , the fastest way to catch this.
+
+<pre class="code-block"><span class="tok-kw3">for</span>{` (`}<span class="tok-kw1">byte</span>{` addr = `}<span class="tok-lit">1</span>{`; addr < `}<span class="tok-lit">127</span>{`; addr++) {
+  `}<span class="tok-kw2">Wire.beginTransmission</span>{`(addr);
+  `}<span class="tok-kw3">if</span>{` (`}<span class="tok-kw2">Wire.endTransmission</span>{`() == `}<span class="tok-lit">0</span>{`) {
+    `}<span class="tok-kw2">Serial.print</span>{`("Found device at 0x");
+    `}<span class="tok-kw2">Serial.println</span>{`(addr, `}<span class="tok-lit">HEX</span>{`);
+  }
+}`}</pre>
+
+## Make sure pin numbers in code match your actual PCB
+
+Not just what you meant to do in the schematic. It's really easy to wire GPIO 3 in the schematic and then reference a totally different pin in your code.
+
+## Isolate input from output
+
+If nothing's working, comment out everything except reading your input over Serial. Get that rock solid before you layer output logic back in.
+
+## Re-read the register map one more time
+
+If your data looks scrambled, a wrong register, wrong byte order, or a missed wake-up step are the usual suspects.
+
+## Helpful resources
+
+[altium.com/documentation](https://www.altium.com/documentation/) is super helpful,, as well as asking people in the <a href="https://app.slack.com/client/E09V59WQY1E/C056AMWSFKJ" style="text-decoration:underline;">#electronics</a> channel on Slack!

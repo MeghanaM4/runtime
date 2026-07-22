@@ -1,0 +1,91 @@
+---
+stepNum: 5
+title: "Code Your Firmware"
+sub: "// coding time"
+accent: "var(--yellow)"
+prevHref: "step4"
+prevLabel: "Step 4: Design Your PCB"
+nextHref: "step6"
+nextLabel: "Step 6: Submit!!"
+---
+
+We're coding in C++, specifically Arduino code. Download the [Arduino IDE](https://www.arduino.cc/en/software/) and use [this guide](https://wiki.seeedstudio.com/XIAO-RP2040-with-Arduino/) to add your XIAO RP2040 to it, if you're using that.
+
+## Find sample code in the datasheet
+
+Go back to your best friend (the datasheet) and try to find example code or pseudocode tucked near the back. Even if it's written for a different microcontroller, it's still very helpful.
+
+## Find a code library (if one exists)
+
+Search the Arduino Library Manager and/or the internet for your exact part number. If someone's already written a library for it, use it. If you're having trouble getting it to work, then keep reading to write register-level code.
+
+If nothing exists, you're writing register-level code yourself, which is very doable. Keep reading!
+
+## Reading input, getting output to work
+
+Get your **input** printing real values over Serial first (<span class="inline-code">Serial.println()</span> it and watch the Serial Monitor) before you touch your **output** logic at all.
+
+## SPI and I2C
+
+Every I2C device has an **address**, check the datasheet (<span class="inline-code">CTRL+F</span> "address") to find it. It'll usually show up as a 7-bit binary number, which you convert to hex for your code.
+
+<pre class="code-block"><span class="cm">// pull this from your part's datasheet</span>{`
+#include <Wire.h>
+#define SENSOR_ADDR `}<span class="tok-lit">0x68</span></pre>
+
+<span class="inline-code">Wire.h</span> is Arduino's I2C library, it's how you read and write data to your parts. Before you can talk to anything, initialize it with <span class="inline-code">Wire.begin()</span>:
+
+<pre class="code-block"><span class="tok-kw1">void</span> <span class="tok-kw3">setup</span>{`() {
+  `}<span class="tok-kw2">Serial.begin</span>{`(`}<span class="tok-lit">9600</span>{`);
+  `}<span class="tok-kw2">Wire.begin</span>{`();
+}`}</pre>
+
+To write to a device, wrap your message between <span class="inline-code">beginTransmission()</span> and <span class="inline-code">endTransmission()</span>:
+
+<pre class="code-block"><span class="tok-kw2">Wire.beginTransmission</span>{`(SENSOR_ADDR);
+`}<span class="tok-kw2">Wire.write</span>{`(`}<span class="tok-lit">0x6B</span>{`);   `}<span class="cm">// register address</span>{`
+`}<span class="tok-kw2">Wire.write</span>{`(`}<span class="tok-lit">0x00</span>{`);   `}<span class="cm">// value to write</span>{`
+`}<span class="tok-kw2">Wire.endTransmission</span>{`();`}</pre>
+
+<div class="callout tip">
+<span class="label">Most sensors need waking up</span>
+<p>Before they'll send you real data, <span class="inline-code">CTRL+F</span> "sleep mode" or "power management" in the datasheet to find the right register and value to write.</p>
+</div>
+
+Getting data *back* works a little differently, you point to a register, then request bytes from it:
+
+<pre class="code-block"><span class="tok-kw2">Wire.beginTransmission</span>{`(SENSOR_ADDR);
+`}<span class="tok-kw2">Wire.write</span>{`(`}<span class="tok-lit">0x43</span>{`);              `}<span class="cm">// starting register for output data</span>{`
+`}<span class="tok-kw2">Wire.endTransmission</span>{`(`}<span class="tok-lit">false</span>{`);   `}<span class="cm">// false = keep the bus open, don't hang up yet</span>{`
+`}<span class="tok-kw2">Wire.requestFrom</span>{`(SENSOR_ADDR, `}<span class="tok-lit">6</span>{`);`}</pre>
+
+<span class="inline-code">endTransmission(true)</span>, the default, means "I'm done talking." <span class="inline-code">endTransmission(false)</span> means "I've got more to say," which is what you want right before <span class="inline-code">requestFrom()</span> so you can read from the register you just pointed at.
+
+Sensors send data in bytes (8 bits), but most real readings are 16-bit numbers, so you get a high byte and a low byte and have to smush them back together:
+
+<pre class="code-block"><span class="tok-kw1">int16_t</span>{` x = (`}<span class="tok-kw2">Wire.read</span>{`() << `}<span class="tok-lit">8</span>{`) | `}<span class="tok-kw2">Wire.read</span>{`();`}</pre>
+
+Shift the high byte left by 8, OR it with the low byte, and you've got your real 16-bit value.
+
+## Finish a working version before the PCB arrives
+
+You won't be able to fully test this until your PCB physically shows up, but you need *something* working to submit. Breadboard or jumper-wire test your input and output against your microcontroller ahead of time if you can, get the logic right now, and save fine-tuning (thresholds, calibration, exact timing) for when the real board's in your hands.
+
+## Firmware checklist
+
+<ul class="checklist">
+<li><span class="box"></span> Include Wire.h (or SPI.h) and declare your part's address</li>
+<li><span class="box"></span> In setup(), begin Wire/SPI and Serial</li>
+<li><span class="box"></span> Wake up your part if its datasheet requires it</li>
+<li><span class="box"></span> <em>Optional:</em> calibrate</li>
+<li><span class="box"></span> Write a read function using write() + requestFrom() (I2C) or the SPI equivalent</li>
+<li><span class="box"></span> Bit-shift multi-byte reads into the right format</li>
+<li><span class="box"></span> Call your read function in loop()</li>
+<li><span class="box"></span> Drive your output based on that data</li>
+</ul>
+
+## Helpful links
+
+- Your part's official Arduino library repo, if one exists, check its GitHub examples folder first, it'll save you hours
+- [Arduino Reference](https://www.arduino.cc/reference/en/)
+- Searching "[your microcontroller] + [protocol] example" (like "XIAO RP2040 I2C example") almost always turns up a working starting point

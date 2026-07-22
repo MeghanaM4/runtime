@@ -1,0 +1,40 @@
+---
+stepNum: 6
+title: "Submit to Runtime!"
+sub: "// you did it!"
+accent: "var(--teal)"
+prevHref: "step5"
+prevLabel: "Step 5: Code Your Firmware"
+nextHref: "step7"
+nextLabel: "Step 7: Order Your PCB →"
+---
+
+Before submitting, make sure you have:
+
+<ul class="checklist">
+<li><span class="box"></span> A **public** GitHub repo with your README, project files, production files, firmware, and journal.md</li>
+<li><span class="box"></span> Each journal.md entry titled with how much time you spent that session and at least one screenshot per entry</li>
+<li><span class="box"></span> A <span style="font-weight:bold; text-decoration:underline">good</span> README that has your BOM (bill of materials). More on that below.</li>
+</ul>
+
+Here's what a good GitHub repo file structure looks like:
+<div class="gif-slot">
+<img style="height:60vh" src="/guide/6.1.png"></img>
+</div>
+
+## README + BOM
+
+A good readme has the project name, the input, output, and connector you rolled, a short description of what your board does, and some screenshots of your PCB. The BOM should have part name, quantity, cost, and where it's from:
+
+<pre class="code-block">{`| Part                | Qty | Source          |
+|---------------------|-----|-----------------|
+| XIAO RP2040          | 1   | Seeed Studio    |
+| DS18B20 temp sensor  | 1   | JLCPCB catalog  |
+| 4.7k resistor        | 1   | JLCPCB catalog  |
+| Passive piezo buzzer | 1   | JLCPCB catalog  |`}</pre>
+
+## You're all set!
+
+<div class="page-submit-wrap">
+<a href="https://forms.hackclub.com/submitruntime" style="color:white" class="page-submit-btn text-white">Submit your Runtime board!</a>
+</div>

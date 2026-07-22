@@ -11,65 +11,69 @@ import ImplCard from "../components/ImplCard.astro";
     </nav>
 
     <div
-      class="fixed right-[2rem] mt-[4rem] z-100 flex flex-col h-min justify-end w-min"
+      class="absolute text-[1.5rem] mt-[4rem] gap-[1.5rem] flex flex-col w-full z-100 items-end"
     >
-      <button
-        class="cool-btn bebas bg-[#00c277] w-min p-[1rem] flex gap-[0.5rem] items-center justify-center"
-        type="button"
-      >
-        <span id="spin-btn-text">SUBMIT!</span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="32"
-          height="32"
-          viewBox="0 0 24 24"
-          ><!-- Icon from Tabler Icons by Paweł Kuna - https://github.com/tabler/tabler-icons/blob/master/LICENSE -->
-          <g
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            ><path
-              d="M19.875 6.27A2.23 2.23 0 0 1 21 8.218v7.284c0 .809-.443 1.555-1.158 1.948l-6.75 4.27a2.27 2.27 0 0 1-2.184 0l-6.75-4.27A2.23 2.23 0 0 1 3 15.502V8.217c0-.809.443-1.554 1.158-1.947l6.75-3.98a2.33 2.33 0 0 1 2.25 0l6.75 3.98z"
-            ></path><path d="M10 16v-6a2 2 0 1 1 4 0v6m-4-3h4"></path></g
-          ></svg
+      <div class="cool-btn bebas bg-[#00c277] mr-[1rem]">
+        <a
+          class="p-[1rem] flex gap-[0.5rem] items-center justify-center"
+          style="color:white; text-decoration: none;"
+          href="/guide/step6"
         >
-      </button>
+          <span>SUBMIT!</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="30"
+            viewBox="0 0 24 24"
+            ><!-- Icon from Tabler Icons by Paweł Kuna - https://github.com/tabler/tabler-icons/blob/master/LICENSE -->
+            <g
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              ><path
+                d="M19.875 6.27A2.23 2.23 0 0 1 21 8.218v7.284c0 .809-.443 1.555-1.158 1.948l-6.75 4.27a2.27 2.27 0 0 1-2.184 0l-6.75-4.27A2.23 2.23 0 0 1 3 15.502V8.217c0-.809.443-1.554 1.158-1.947l6.75-3.98a2.33 2.33 0 0 1 2.25 0l6.75 3.98z"
+              ></path><path d="M10 16v-6a2 2 0 1 1 4 0v6m-4-3h4"></path></g
+            ></svg
+          >
+        </a>
+      </div>
 
-      <button
-        class="cool-btn bebas mt-[2rem] bg-[#e87500] w-min ml-[1.4rem] p-[1rem] flex gap-[0.5rem] items-center justify-center"
-        type="button"
+      <div
+        class="cool-btn bebas bg-[#e87500] mr-[1rem]"
       >
-        <span id="spin-btn-text">PCB GUIDE</span>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="40"
-          height="40"
-          viewBox="0 0 24 24"
-          ><!-- Icon from Tabler Icons by Paweł Kuna - https://github.com/tabler/tabler-icons/blob/master/LICENSE -->
-          <g
-            fill="none"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            ><path
-              d="M19.875 6.27A2.23 2.23 0 0 1 21 8.218v7.284c0 .809-.443 1.555-1.158 1.948l-6.75 4.27a2.27 2.27 0 0 1-2.184 0l-6.75-4.27A2.23 2.23 0 0 1 3 15.502V8.217c0-.809.443-1.554 1.158-1.947l6.75-3.98a2.33 2.33 0 0 1 2.25 0l6.75 3.98z"
-            ></path><path d="M10 16h2a2 2 0 1 0 0-4h-2h2a2 2 0 1 0 0-4h-2z"
-            ></path></g
-          ></svg
-        >
-      </button>
+        <a class="p-[1rem] flex gap-[0.5rem] items-center justify-center" style="color:white; text-decoration: none" href="/guide/step1">
+          <span>PCB GUIDE</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="30"
+            height="30"
+            viewBox="0 0 24 24"
+            ><!-- Icon from Tabler Icons by Paweł Kuna - https://github.com/tabler/tabler-icons/blob/master/LICENSE -->
+            <g
+              fill="none"
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              ><path
+                d="M19.875 6.27A2.23 2.23 0 0 1 21 8.218v7.284c0 .809-.443 1.555-1.158 1.948l-6.75 4.27a2.27 2.27 0 0 1-2.184 0l-6.75-4.27A2.23 2.23 0 0 1 3 15.502V8.217c0-.809.443-1.554 1.158-1.947l6.75-3.98a2.33 2.33 0 0 1 2.25 0l6.75 3.98z"
+              ></path><path d="M10 16h2a2 2 0 1 0 0-4h-2h2a2 2 0 1 0 0-4h-2z"
+              ></path></g
+            ></svg
+          >
+        </a>
+      </div>
     </div>
 
-    <div
+    <!-- <div
       class="fixed left-[2rem] mt-[4rem] z-100 flex flex-col h-min justify-end w-min"
     >
       <a
         href="/calendar"
         class="cool-btn bebas bg-[#ff3560] w-min p-[1rem] flex gap-[0.5rem] items-center justify-center"
-        style="border-radius: 1.5rem; text-decoration: none;"
+        style="border-radius: 1.5rem; text-decoration: none; color:white"
         id="calendar-btn"
       >
         <svg
@@ -77,14 +81,14 @@ import ImplCard from "../components/ImplCard.astro";
           width="32"
           height="32"
           viewBox="0 0 24 24"
-          ><!-- Icon from Material Symbols by Google - https://github.com/google/material-design-icons/blob/master/LICENSE -->
+          >
           <path
             fill="currentColor"
             d="M5 22q-.825 0-1.412-.587T3 20V6q0-.825.588-1.412T5 4h1V3q0-.425.288-.712T7 2t.713.288T8 3v1h8V3q0-.425.288-.712T17 2t.713.288T18 3v1h1q.825 0 1.413.588T21 6v14q0 .825-.587 1.413T19 22zm0-2h14V10H5zM5 8h14V6H5zm0 0V6zm7 6q-.425 0-.712-.288T11 13t.288-.712T12 12t.713.288T13 13t-.288.713T12 14m-4 0q-.425 0-.712-.288T7 13t.288-.712T8 12t.713.288T9 13t-.288.713T8 14m8 0q-.425 0-.712-.288T15 13t.288-.712T16 12t.713.288T17 13t-.288.713T16 14m-4 4q-.425 0-.712-.288T11 17t.288-.712T12 16t.713.288T13 17t-.288.713T12 18m-4 0q-.425 0-.712-.288T7 17t.288-.712T8 16t.713.288T9 17t-.288.713T8 18m8 0q-.425 0-.712-.288T15 17t.288-.712T16 16t.713.288T17 17t-.288.713T16 18"
           ></path></svg
         >
       </a>
-    </div>
+    </div> -->
 
     <div class="dashboard-div">
       <div class="dashboard-card">
@@ -92,8 +96,8 @@ import ImplCard from "../components/ImplCard.astro";
       </div>
     </div>
 
-    <div class="cards-div mb-[4rem]">
-      <div class="cards-col">
+    <div class="dashboard-columns">
+      <div class="dashboard-col-cards">
         <ImplCard
           id="impl-input"
           color="var(--yellow)"
@@ -112,6 +116,27 @@ import ImplCard from "../components/ImplCard.astro";
           typeLabel="OUTPUT"
           class="dashboard-impl-card"
         />
+      </div>
+
+      <div class="criteria-card">
+        <p class="criteria-heading bebas mb-[1rem]">what you need to submit</p>
+
+        <ul class="criteria-list">
+          <li>
+            <span class="criteria-box"></span>
+            <span>A <strong>public GitHub repo</strong> with your README, project files, production files, firmware, and <span class="criteria-code">journal.md</span> — commit progress often, don't dump it all in one commit at the end</span>
+          </li>
+          <li>
+            <span class="criteria-box"></span>
+            <span>Track your time with <span class="criteria-code">journal.md</span> or <a href="https://lookout.hackclub.com" target="_blank" rel="noopener" class="criteria-link">Lookout</a> — each journal entry titled with how much time you spent that session, with 2-4 screenshots per entry</span>
+          </li>
+          <li>
+            <span class="criteria-box"></span>
+            <span>A good README with your input/output/connector, a short description of your board, PCB screenshots, and a BOM (bill of materials)</span>
+          </li>
+        </ul>
+
+        <p class="criteria-note">Write journal entries like you're explaining the session to someone else, not logging a timestamp — "worked on schematic, 1h" tells nobody anything. What did you actually figure out? What are you stuck on?</p>
       </div>
     </div>
   </main>
@@ -193,40 +218,45 @@ import ImplCard from "../components/ImplCard.astro";
     color: var(--teal);
   }
 
-  .cards-div {
-    display: flex;
-    justify-content: center;
+  .dashboard-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap:5rem;
+    max-width: 1200px;
+    width: 90vw;
+    margin: 1rem auto 4rem;
+  }
+  @media (max-width: 900px) {
+    .dashboard-columns {
+      grid-template-columns: 1fr;
+      width: 92vw;
+    }
   }
 
-  .cards-col {
+  .dashboard-col-cards {
     display: flex;
+    flex-direction: column;
     gap: 1.5rem;
-    flex-wrap: wrap;
-    justify-content: center;
-    max-width: 1100px;
-    width: 80vw;
   }
 
   .dashboard-impl-card {
-    flex: 1;
-    min-width: 260px;
-    max-width: 340px;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
   }
 
   .cool-btn {
-    color: white;
     border: 4px solid var(--ink);
     border-radius: 8px;
     box-shadow: 6px 6px 0 var(--ink);
-    font-size: 2rem;
     letter-spacing: 0.1em;
-    cursor: pointer;
     transition:
       transform 0.1s,
       box-shadow 0.1s,
       background 0.15s;
-    user-select: none;
   }
+  
   .cool-btn:hover:not(:disabled) {
     transform: translate(-2px, -2px);
     box-shadow: 8px 8px 0 var(--ink);
@@ -240,6 +270,100 @@ import ImplCard from "../components/ImplCard.astro";
     cursor: not-allowed;
     box-shadow: 3px 3px 0 var(--ink);
     color: #888;
+  }
+
+  /* ---------- submission criteria (pulled from guide step1 + step6) ---------- */
+  .criteria-card {
+    background: var(--ink);
+    color: var(--bg);
+    border: 4px solid var(--ink);
+    border-radius: 14px;
+    padding: 2rem 2.5rem;
+    width: 100%;
+    height: max-content;
+  }
+
+  .criteria-heading {
+    font-size: 1.6rem;
+    letter-spacing: 0.08em;
+  }
+
+  .criteria-sub {
+    font-family: "Space Mono", monospace;
+    font-size: 0.75rem;
+    opacity: 0.55;
+    margin: 0 0 1.5rem;
+  }
+
+  .criteria-list {
+    list-style: none;
+    margin: 0 0 1.25rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .criteria-list li {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+
+  .criteria-box {
+    flex: none;
+    width: 18px;
+    height: 18px;
+    margin-top: 3px;
+    border: 2.5px solid var(--bg);
+    border-radius: 4px;
+  }
+
+  .criteria-code {
+    font-family: "Space Mono", monospace;
+    font-size: 0.85em;
+    background: rgba(255, 255, 255, 0.12);
+    padding: 1px 6px;
+    border-radius: 4px;
+  }
+
+  .criteria-link {
+    color: var(--teal);
+    text-decoration: underline;
+  }
+
+  .criteria-note {
+    font-size: 0.85rem;
+    opacity: 0.75;
+    line-height: 1.5;
+    border-top: 2px dashed rgba(255, 255, 255, 0.2);
+    padding-top: 1rem;
+  }
+
+  .criteria-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .criteria-btn {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    padding: 0.7rem 1.4rem;
+    font-size: 0.95rem;
+  }
+
+  .criteria-btn-teal {
+    background: var(--teal);
+    color: var(--ink);
+  }
+
+  .criteria-btn-green {
+    background: #22c55e;
+    color: white;
   }
 </style>
 

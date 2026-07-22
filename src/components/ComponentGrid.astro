@@ -1,0 +1,141 @@
+---
+// components/ComponentGrid.astro
+// Renders one category (inputs / outputs / connectors) of the Runtime
+// component catalog, reading straight from src/data/components.json.
+//
+// Each catalog item can offer multiple ways to build it (e.g. MORSE CODE
+// can be done with a Single LED or a Piezo buzzer) — components[i],
+// implementation[i], and image[i] all line up by index. Every variant
+// gets its own card with its own image, description, and links.
+//
+// Astro builds statically, so it has no way to know the user's assigned
+// part at build time (localStorage only exists in the browser). Instead,
+// every item's card group renders server-side, tagged with its label,
+// and a small client-side script hides every group except the one
+// matching localStorage.getItem("input" | "output" | "connector") once
+// the page loads.
+
+import catalog from '../data/parameters.json';
+
+interface CatalogItem {
+  id: string;
+  label: string;
+  image: string[];
+  components: string[];
+  implementation: string[];
+  symbol: (string | null)[];
+  footprint: (string | null)[];
+  datasheet: (string | null)[];
+}
+
+interface Props {
+  category: 'inputs' | 'outputs' | 'connectors';
+}
+
+const { category } = Astro.props;
+const items: CatalogItem[] = catalog[category];
+const isConnector = category === 'connectors';
+
+const tagLabel =
+  category === 'inputs' ? 'INPUT' : category === 'outputs' ? 'OUTPUT' : 'CONNECTOR';
+const cardClass =
+  category === 'inputs' ? 'input' : category === 'outputs' ? 'output' : 'connector';
+
+// maps this collection's category name to the localStorage key that
+// Runtime's generator/dashboard writes the user's assigned part under
+const storageKey =
+  category === 'inputs' ? 'input' : category === 'outputs' ? 'output' : 'connector';
+---
+
+<div class="catalog-groups" data-storage-key={storageKey}>
+  {items.map((item) => (
+    <div class="component-group" data-label={item.label}>
+      <p class="component-group-label">{tagLabel}: {item.label}</p>
+      <div class="part-grid">
+        {item.components.map((componentName, i) => {
+          const symbol = item.symbol[i];
+          const footprint = item.footprint[i];
+          const datasheet = item.datasheet[i];
+          const hasLinks = symbol || footprint || datasheet;
+          return (
+            <div class={`part-card ${cardClass}`}>
+              <img class="part-img" src={item.image[i]} alt={componentName} loading="lazy" />
+              <h4 class="part-name">{componentName}</h4>
+              <p class="part-impl">
+                {isConnector ? (
+                  <>
+                    {item.implementation[i]}
+                  </>
+                ) : (
+                  item.implementation[i]
+                )}
+              </p>
+              {hasLinks && (
+                <div class="part-links">
+                  {datasheet && (
+                    <a href={datasheet} target="_blank" rel="noopener">
+                      Datasheet ↗
+                    </a>
+                  )}
+                  {symbol && (
+                    <a href={symbol} target="_blank" rel="noopener">
+                      Symbol ↗
+                    </a>
+                  )}
+                  {footprint && (
+                    <a href={footprint} target="_blank" rel="noopener">
+                      Footprint ↗
+                    </a>
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  ))}
+</div>
+
+<script>
+  // Runs once per page load. Astro dedupes identical inline scripts, so
+  // even with three <ComponentGrid /> instances on step2 this only runs
+  // once — it loops over every tagged wrapper and filters each on its
+  // own data-storage-key, resolving all three (input/output/connector)
+  // in a single pass.
+  //
+  // Storage contract: localStorage.getItem("input" | "output" | "connector")
+  // returns the item's display label (e.g. "MORSE CODE"), matched
+  // case-insensitively against each group's data-label. A whole group
+  // (heading + all its component-variant cards) shows or hides together.
+  function filterToAssignedPart() {
+    document
+      .querySelectorAll<HTMLElement>('.catalog-groups[data-storage-key]')
+      .forEach((wrapper) => {
+        const key = wrapper.dataset.storageKey;
+        if (!key) return;
+
+        const raw = localStorage.getItem(key);
+        if (!raw) return; // nothing assigned yet — leave the full catalog visible
+
+        const assigned = raw.trim().toLowerCase();
+        const groups = Array.from(wrapper.querySelectorAll<HTMLElement>('.component-group'));
+        const matches = groups.filter(
+          (group) => (group.dataset.label ?? '').trim().toLowerCase() === assigned
+        );
+
+        if (matches.length === 0) {
+          console.warn(
+            `[ComponentGrid] no group matched localStorage.getItem("${key}") === "${assigned}" — showing full catalog instead.`
+          );
+          return;
+        }
+
+        groups.forEach((group) => {
+          group.style.display = matches.includes(group) ? '' : 'none';
+        });
+      });
+  }
+
+  filterToAssignedPart();
+</script>

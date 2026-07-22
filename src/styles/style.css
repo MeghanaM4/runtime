@@ -1,0 +1,562 @@
+/* ============================================================
+   Runtime Guide — shared stylesheet
+   Palette pulled straight from the Runtime logo + spin graphic:
+   teal #00AABB (connector), yellow #FFC400 (input),
+   orange #FF6B2B (output), ink #171717, cream #FFFCEF
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;600;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --ink: #171717;
+  --cream: #FFFCEF;
+  --cream-dim: #FFF6D6;
+  --teal: #00AABB;
+  --teal-dark: #007886;
+  --green: #22C55E;
+  --yellow: #FFC400;
+  --orange: #FF6B2B;
+  --line: 3px;
+  --radius: 16px;
+  --shadow: 5px 5px 0 var(--ink);
+  --accent: var(--teal); /* overridden per-page */
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+/* Scoped to a wrapper instead of `body` on purpose — global.css also
+   targets `body` (for the dashboard/generator pages), and `background`
+   is a shorthand that resets background-image/-size/-position to
+   nothing whenever it's set, so two separate `body { background: ... }`
+   rules will always fight based on import order. Scoping to our own
+   class sidesteps that entirely. */
+.guide-page {
+  background: var(--bg, var(--cream));
+  background-image:
+    radial-gradient(var(--ink) 0.6px, transparent 0.6px);
+  background-size: 26px 26px;
+  background-position: -6px -6px;
+  min-height: 100vh;
+  padding-left: 22px; /* room for the progress rail */
+}
+
+@media (max-width: 640px) {
+  .guide-page { padding-left: 14px; }
+  body { font-size: 16px; }
+}
+
+/* Progress rail styling now lives inside components/ProgressBar.astro
+   as a scoped style block — nothing needed here anymore. */
+
+/* ---------- page outline (left-side table of contents) ---------- */
+/* Positioned entirely on its own — NOT sharing a grid/flex row with
+   main.content — so there's no shared track for it to stretch into.
+   `left` is calculated straight from viewport center, landing it just
+   left of the independently-centered 760px content column, with a
+   fixed `width` so it can never grow past that. Scrolls with the page
+   like everything else, then sticks once it hits `top` (same behavior
+   as Google Docs' outline panel). Plain text on the page background —
+   no border, no shadow, no card — just a darker-yellow label. Hidden
+   below 1300px, since there's no room for it alongside the content
+   column on anything narrower. */
+.page-outline {
+  position: sticky;
+  top: 90px;
+  left: calc(50% - 590px); /* 380 (half content width) + 30 (gap) + 180 (own width) */
+  width: 180px;
+  max-height: calc(100vh - 110px);
+  overflow-y: auto;
+  display: none;
+}
+@media (min-width: 1300px) {
+  .page-outline { display: block; }
+}
+
+/* dark, muted yellow — a shade darker than the page background, not
+   the bright button/badge --yellow accent */
+:root { --outline-text: #8a6d00; }
+
+/* collapsible via native <details>/<summary> — no JS needed */
+.page-outline summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--outline-text);
+  -webkit-user-select: none;
+  user-select: none;
+}
+.page-outline summary::-webkit-details-marker { display: none; }
+.page-outline summary::marker { content: ''; }
+
+.page-outline .chevron {
+  display: inline-block;
+  font-size: 10px;
+  color: var(--outline-text);
+  transition: transform 150ms ease;
+}
+.page-outline details[open] .chevron { transform: rotate(90deg); }
+
+.page-outline ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.page-outline li { margin: 0; }
+
+/* explicit :link / :visited overrides so nothing from a global anchor
+   style (e.g. global.css's default link color on the dashboard pages)
+   can leak a default blue/purple through here */
+.page-outline a,
+.page-outline a:link,
+.page-outline a:visited {
+  display: block;
+  padding: 4px 0;
+  color: var(--outline-text);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 400;
+  line-height: 1.35;
+  transition: font-weight 120ms ease, text-decoration-color 120ms ease;
+}
+.page-outline li.depth-3 a {
+  padding-left: 14px;
+  font-size: 0.76rem;
+  opacity: 0.85;
+}
+.page-outline a:hover,
+.page-outline a:focus-visible {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* ---------- top bar ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  max-width: 760px;
+  margin: 28px auto 0;
+  padding: 0 20px;
+}
+
+.wordmark {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  color: var(--ink);
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+.wordmark span.dot { color: var(--accent); }
+
+.map-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--ink);
+  background: #fff;
+  border: var(--line) solid var(--ink);
+  border-radius: 999px;
+  padding: 7px 14px;
+  box-shadow: 3px 3px 0 var(--ink);
+  transition: transform 120ms ease;
+  white-space: nowrap;
+}
+.map-link:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--ink); }
+.map-link:active { transform: translate(0,0); box-shadow: 1px 1px 0 var(--ink); }
+
+/* ---------- hero / step header ---------- */
+.step-hero {
+  max-width: 760px;
+  margin: 22px auto 0;
+  padding: 0 20px;
+}
+
+.step-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  background: var(--accent);
+  border: var(--line) solid var(--ink);
+  border-radius: 999px;
+  padding: 5px 14px 5px 8px;
+  box-shadow: var(--shadow);
+}
+.step-kicker .num {
+  background: var(--ink);
+  color: var(--cream);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+h1.step-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 2.85rem);
+  line-height: 1.05;
+  margin: 18px 0 6px;
+  letter-spacing: -0.02em;
+}
+
+.step-sub {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: var(--teal-dark);
+  margin: 0 0 8px;
+}
+
+/* subtitle line under an in-content heading, via components/Subtitle.astro
+   in .mdx files — negative top margin pulls it snug against the
+   heading above (h2 margin-bottom: 14px, h3: 10px) */
+.mdx-subtitle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--teal-dark);
+  margin: -10px 0 18px;
+}
+
+/* ---------- content column ---------- */
+main.content {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 18px 20px 40px;
+}
+
+main.content p {
+  margin: 0 0 20px;
+}
+
+main.content h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem;
+  margin: 42px 0 14px;
+  padding-top: 6px;
+  border-top: var(--line) dashed rgba(23,23,23,0.25);
+}
+
+main.content h3 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.15rem;
+  margin: 30px 0 10px;
+}
+
+main.content strong { background: linear-gradient(to top, var(--accent) 38%, transparent 38%); padding: 0 1px; }
+
+main.content ul, main.content ol {
+  margin: 0 0 20px;
+  padding-left: 22px;
+}
+main.content li { margin-bottom: 8px; }
+
+main.content a { color: var(--teal-dark); text-decoration-thickness: 2px; }
+
+code, .inline-code {
+  font-family: 'JetBrains Mono', monospace;
+  background: var(--cream-dim);
+  border: 1.5px solid rgba(23,23,23,0.25);
+  border-radius: 5px;
+  padding: 1px 6px;
+  font-size: 0.88em;
+}
+
+pre.code-block {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  background: var(--ink);
+  color: #F2F2F2;
+  border-radius: var(--radius);
+  border: var(--line) solid var(--ink);
+  padding: 18px 20px;
+  overflow-x: auto;
+  margin: 0 0 22px;
+  box-shadow: var(--shadow);
+}
+/* Arduino IDE classic-theme token colors, brightened a touch for our
+   dark code-block background (the real IDE assumes a white one) */
+pre.code-block .cm    { color: #9BA8A9; font-style: italic; }              /* // comments — Arduino grey */
+pre.code-block .tok-kw1 { color: #E67E22; font-weight: 700; }              /* data types: void, byte, int16_t */
+pre.code-block .tok-kw2 { color: #E67E22; font-weight: 400; }              /* library calls: Serial.println, Wire.write */
+pre.code-block .tok-kw3 { color: #A9C23F; font-weight: 400; }              /* control structure: for, if, while, setup */
+pre.code-block .tok-lit { color: #29C1D1; font-weight: 400; }              /* numbers + constants: 0x68, HEX, true/false */
+
+/* ---------- GIF placeholder ---------- */
+.gif-slot {
+  margin: 26px 0 30px;
+  border: var(--line) var(--ink);
+  border-radius: var(--radius);
+  background: repeating-linear-gradient(
+    135deg, #fff, #fff 10px, var(--cream-dim) 10px, var(--cream-dim) 20px
+  );
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 6px;
+}
+.gif-slot .gif-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 12px;
+  background: var(--ink);
+  color: var(--cream);
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+.gif-slot .gif-caption {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: rgba(23,23,23,0.65);
+  max-width: 480px;
+}
+.gif-slot img,
+.gif-slot video {
+  max-width: 100%;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  display: block;
+}
+
+/* ---------- callouts ---------- */
+.callout {
+  border: var(--line) solid var(--ink);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin: 0 0 24px;
+  box-shadow: var(--shadow);
+  background: #fff;
+}
+.callout.stop {
+  background: var(--orange);
+}
+.callout.tip {
+  background: var(--yellow);
+}
+.callout.note {
+  background: var(--teal);
+  color: var(--cream);
+}
+.callout .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 6px;
+}
+.callout p:last-child { margin-bottom: 0; }
+
+/* ---------- component-list cards (step 2) ---------- */
+.part-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin: 0 0 26px;
+}
+
+.part-card {
+  border: var(--line) solid var(--ink);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+  background: #fff;
+}
+.part-card .tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 2px solid var(--ink);
+  margin-bottom: 8px;
+}
+.part-card.input .tag { background: var(--yellow); }
+.part-card.output .tag { background: var(--orange); }
+.part-card.connector .tag { background: var(--teal); color: var(--cream); }
+.part-card ul { padding-left: 18px; margin: 8px 0 0; font-size: 0.92rem; }
+.part-card li { margin-bottom: 4px; }
+
+/* ---------- catalog (step 2 — real component cards) ---------- */
+/* one component-group per catalog item (heading + its variant cards);
+   layout reuses .part-grid / .part-card so both the intro explainer
+   cards and the real data-driven cards share one style */
+.catalog-groups { margin: 0 0 26px; }
+.component-group { margin: 0 0 24px; }
+.component-group-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--teal-dark);
+  margin: 0 0 10px;
+}
+
+.part-card .part-img {
+  width: 100%;
+  height: 110px;
+  object-fit: contain;
+  background: var(--cream-dim);
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.part-card .part-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  margin: 2px 0 6px;
+}
+
+.part-card .part-components {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.74rem;
+  opacity: 0.7;
+  margin: 0 0 8px;
+  line-height: 1.4;
+}
+
+.part-card .part-impl {
+  font-size: 0.86rem;
+  margin: 0 0 12px;
+}
+
+.part-card .part-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.part-card .part-links a {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  color: var(--teal-dark);
+  background: #fff;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  padding: 3px 9px;
+  transition: background 120ms ease;
+}
+.part-card .part-links a:hover { background: var(--accent, var(--yellow)); color: var(--ink); }
+
+/* ---------- checklist (step 5) ---------- */
+.checklist { list-style: none; padding-left: 0; }
+.checklist li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 8px 0;
+  border-bottom: 1.5px dashed rgba(23,23,23,0.2);
+}
+.checklist li:last-child { border-bottom: none; }
+.checklist .box {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  border: 2.5px solid var(--ink);
+  border-radius: 4px;
+}
+
+/* ---------- prev/next nav ---------- */
+.step-nav {
+  max-width: 760px;
+  margin: 30px auto 60px;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+}
+@media (max-width: 640px) { .step-nav { flex-direction: column; } }
+
+.nav-btn {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  color: var(--ink);
+  background: #fff;
+  border: var(--line) solid var(--ink);
+  border-radius: 12px;
+  padding: 12px 18px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: transform 120ms ease;
+  flex: 1;
+}
+.nav-btn.next { text-align: right; align-items: flex-end; background: var(--accent); }
+.nav-btn small { font-weight: 400; opacity: 0.7; font-size: 11px; }
+.nav-btn:hover { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 var(--ink); }
+.nav-btn:active { transform: translate(0,0); box-shadow: 2px 2px 0 var(--ink); }
+
+.submit-btn { background: var(--orange); }
+
+/* ---------- in-content submit button (e.g. step 6's "Submit for Review") ---------- */
+.page-submit-wrap {
+  text-align: center;
+  margin: 40px 0 20px;
+}
+.page-submit-btn {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 16px;
+  text-decoration: none;
+  background: #4cab37;
+  border: var(--line) solid var(--ink);
+  border-radius: 14px;
+  padding: 16px 32px;
+  box-shadow: var(--shadow);
+  transition: transform 120ms ease, box-shadow 120ms ease;
+  color:white;
+}
+.page-submit-btn:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--ink); }
+.page-submit-btn:active { transform: translate(0, 0); box-shadow: 2px 2px 0 var(--ink); }
+
+footer.site-foot {
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: rgba(23,23,23,0.5);
+  padding: 10px 20px 50px;
+}

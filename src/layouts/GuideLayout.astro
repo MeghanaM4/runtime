@@ -1,0 +1,100 @@
+---
+// layouts/GuideLayout.astro
+// Shared chrome for every Runtime guide step: topbar, progress rail,
+// step hero, and the prev/next nav at the bottom. Step pages just
+// import this and drop their content in the default slot.
+
+import ProgressBar from '../components/ProgressBar.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import '../styles/global.css';
+import '../styles/style.css';
+
+interface NavLink {
+  href: string;
+  label: string;
+}
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  title: string;
+  stepNum: number;
+  stepTitle: string;
+  stepSub: string;
+  accent: string;
+  prev?: NavLink;
+  next?: NavLink;
+  /** Set true on the last step to style the next button as a submit CTA */
+  isSubmit?: boolean;
+  /** Headings extracted from this step's content via Astro's render() —
+   *  passed straight through from pages/guide/[slug].astro */
+  headings?: Heading[];
+}
+
+const {
+  title,
+  stepNum,
+  stepTitle,
+  stepSub,
+  accent,
+  prev,
+  next,
+  isSubmit = false,
+  headings = [],
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+</head>
+<body style={`--accent: ${accent};`}>
+<div class="guide-page">
+
+  <ProgressBar accent={accent} />
+
+  <div class="topbar">
+    <a class="wordmark" href="/dashboard">RUN<span class="dot">•</span>TIME</a>
+    <a class="map-link" href="/dashboard">← BACK TO MAP</a>
+  </div>
+
+  <div class="step-hero">
+    <span class="step-kicker"><span class="num">{stepNum}</span> OF 7</span>
+    <h1 class="step-title">{stepTitle}</h1>
+    <p class="step-sub">{stepSub}</p>
+  </div>
+
+  <TableOfContents headings={headings} />
+
+  <main class="content">
+    <slot />
+  </main>
+
+  <div class="step-nav">
+    {prev ? (
+      <a class="nav-btn" href={prev.href}>
+        <small>← back</small>
+        {prev.label}
+      </a>
+    ) : <span />}
+
+    {next ? (
+      <a class={`nav-btn next ${isSubmit ? 'submit-btn' : ''}`} href={next.href}>
+        <small>{isSubmit ? 'you made it' : 'next up'}</small>
+        {next.label}
+      </a>
+    ) : null}
+  </div>
+
+  <footer class="site-foot">Runtime · Hack Club — a YSWS for teens 13–18</footer>
+
+</div>
+</body>
+</html>

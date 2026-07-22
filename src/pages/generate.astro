@@ -35,21 +35,13 @@ const { inputs, outputs, connectors } = params;
 
     <div class="machines-div h-fit">
       <div class="machines-row h-fit">
-        <!-- INPUT — Plug -->
+        <!-- INPUT -->
         <div class="machine-col">
-          <div class="machine" id="machine-input">
-            <div class="plug-body machine-body">
-              <div class="machine-top-label bebas">INPUT</div>
-              <div class="slot-window" id="window-input">
-                <div class="slot-strip" id="strip-input"></div>
-              </div>
-              <div class="plug-dots" aria-hidden="true">
-                <span></span><span></span><span></span>
-              </div>
+          <div class="machine-card" id="machine-input">
+            <div class="machine-card-tag bebas" style="background: var(--yellow)">INPUT</div>
+            <div class="slot-window" id="window-input">
+              <div class="slot-strip" id="strip-input"></div>
             </div>
-          </div>
-          <div class="machine-label bebas" style="color: var(--yellow)">
-            INPUT
           </div>
           <ImplCard
             id="impl-input"
@@ -59,29 +51,13 @@ const { inputs, outputs, connectors } = params;
           />
         </div>
 
-        <!-- CONNECTOR — Monitor -->
+        <!-- CONNECTOR -->
         <div class="machine-col">
-          <div class="machine monitor-machine" id="machine-connector">
-            <div class="monitor-antennae" aria-hidden="true">
-              <div class="antenna left"></div>
-              <div class="antenna right"></div>
+          <div class="machine-card" id="machine-connector">
+            <div class="machine-card-tag bebas" style="background: var(--teal); color: var(--cream, #fff)">CONNECTOR</div>
+            <div class="slot-window" id="window-connector">
+              <div class="slot-strip" id="strip-connector"></div>
             </div>
-            <div class="monitor-body machine-body">
-              <div class="machine-top-label bebas">CONNECTOR</div>
-              <div class="monitor-bezel">
-                <div class="slot-window dark-window" id="window-connector">
-                  <div class="slot-strip" id="strip-connector"></div>
-                </div>
-                <div class="power-led" aria-hidden="true"></div>
-              </div>
-            </div>
-            <div class="monitor-stand" aria-hidden="true">
-              <div class="stand-neck"></div>
-              <div class="stand-base"></div>
-            </div>
-          </div>
-          <div class="machine-label bebas" style="color: var(--teal)">
-            CONNECTOR
           </div>
           <ImplCard
             id="impl-connector"
@@ -91,24 +67,13 @@ const { inputs, outputs, connectors } = params;
           />
         </div>
 
-        <!-- OUTPUT — Speaker -->
+        <!-- OUTPUT -->
         <div class="machine-col">
-          <div class="machine speaker-machine" id="machine-output">
-            <div class="speaker-body machine-body">
-              <div class="machine-top-label bebas">OUTPUT</div>
-              <div class="slot-window" id="window-output">
-                <div class="slot-strip" id="strip-output"></div>
-              </div>
-              <div class="speaker-grille" aria-hidden="true">
-                <div class="grille-line"></div>
-                <div class="grille-line"></div>
-                <div class="grille-line"></div>
-                <div class="grille-line"></div>
-              </div>
+          <div class="machine-card" id="machine-output">
+            <div class="machine-card-tag bebas" style="background: var(--orange)">OUTPUT</div>
+            <div class="slot-window" id="window-output">
+              <div class="slot-strip" id="strip-output"></div>
             </div>
-          </div>
-          <div class="machine-label bebas" style="color: var(--orange)">
-            OUTPUT
           </div>
           <ImplCard
             id="impl-output"
@@ -122,7 +87,7 @@ const { inputs, outputs, connectors } = params;
 
     <div class="controls-div">
       <button
-        class="spin-btn bebas flex items-center justify-center gap-[0.5rem]"
+        class="cool-btn spin-btn bebas flex items-center justify-center gap-[0.5rem]"
         id="spin-btn"
         type="button"
       >
@@ -142,7 +107,7 @@ const { inputs, outputs, connectors } = params;
 
       <a
         href="/dashboard"
-        class="get-started-btn bebas flex gap-[0.5rem] justify-center items-center"
+        class="cool-btn get-started-btn bebas flex gap-[0.5rem] justify-center items-center"
         id="get-started-btn"
         hidden
       >
@@ -252,55 +217,49 @@ const { inputs, outputs, connectors } = params;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 14px;
     width: fit-content;
   }
 
-  .machine-label {
-    font-size: 1.1rem;
-    letter-spacing: 0.1em;
-  }
-
-  .machine {
-    display: flex;
-    align-items: center;
-  }
-  .machine.spinning .machine-body {
-    animation: shake 0.12s ease-in-out infinite;
-  }
-
-  .machine-body {
+  /* ---------- unified machine card (matches .part-card / .impl-card) ---------- */
+  .machine-card {
     width: 15vw;
+    min-width: 220px;
     height: 40vh;
-    border: 4px solid var(--ink);
-    border-radius: 4px;
-    box-shadow: 7px 7px 0 var(--ink);
+    background: #fff;
+    border: 3px solid var(--ink);
+    border-radius: 16px;
+    box-shadow: 5px 5px 0 var(--ink);
     display: flex;
     flex-direction: column;
     align-items: stretch;
     overflow: hidden;
     position: relative;
+    transition: transform 0.1s, box-shadow 0.1s;
+  }
+  .machine-card.spinning {
+    animation: shake 0.12s ease-in-out infinite;
+  }
+  .machine-card.landed {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 var(--ink);
   }
 
-  .machine-top-label {
+  .machine-card-tag {
     text-align: center;
     font-size: 0.85rem;
     letter-spacing: 0.12em;
-    padding: 5px 12px 4px;
-    background: rgba(0, 0, 0, 0.14);
+    padding: 8px 12px 7px;
     border-bottom: 3px solid var(--ink);
     flex-shrink: 0;
+    color: var(--ink);
   }
 
   .slot-window {
     flex: 1;
     overflow: hidden;
     position: relative;
-  }
-  .dark-window {
-    border: 3px solid var(--ink);
-    border-radius: 4px;
-    background: #0a1628;
+    background: var(--cream-dim, #fff6d6);
   }
 
   .slot-strip {
@@ -310,112 +269,10 @@ const { inputs, outputs, connectors } = params;
     will-change: transform;
   }
 
-  .plug-body {
-    background: var(--yellow);
-  }
-  .plug-dots {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    padding: 8px;
-    flex-shrink: 0;
-  }
-  .plug-dots span {
-    width: 7px;
-    height: 7px;
-    background: var(--ink);
-    border-radius: 50%;
-    opacity: 0.35;
-  }
-
-  .monitor-machine {
-    flex-direction: column;
-    align-items: center;
-  }
-  .monitor-antennae {
-    display: flex;
-    gap: 26px;
-    margin-bottom: -3px;
-    z-index: 1;
-  }
-  .antenna {
-    width: 7px;
-    background: var(--ink);
-    border-radius: 4px 4px 0 0;
-  }
-  .antenna.left {
-    height: 38px;
-    transform: rotate(-10deg);
-    transform-origin: bottom center;
-  }
-  .antenna.right {
-    height: 38px;
-    transform: rotate(10deg);
-    transform-origin: bottom center;
-  }
-  .monitor-body {
-    background: var(--teal);
-    width: 230px;
-  }
-  .monitor-bezel {
-    flex: 1;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .monitor-bezel .slot-window {
-    flex: 1;
-  }
-  .power-led {
-    width: 8px;
-    height: 8px;
-    background: rgb(149, 255, 123);
-    border-radius: 50%;
-    margin-left: auto;
-    flex-shrink: 0;
-  }
-
-  @keyframes led-pulse {
-    0%,
-    100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.5;
-    }
-  }
-  .monitor-stand {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .stand-neck {
-    width: 18px;
-    height: 18px;
-    background: var(--ink);
-  }
-  .stand-base {
-    width: 72px;
-    height: 10px;
-    background: var(--ink);
-    border-radius: 0 0 4px 4px;
-  }
-
-  .speaker-body {
-    background: var(--orange);
-  }
-  .speaker-grille {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    padding: 8px 16px;
-    flex-shrink: 0;
-  }
-  .grille-line {
-    height: 4px;
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 2px;
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    75% { transform: translateX(2px); }
   }
 
   .controls-div {
@@ -424,70 +281,61 @@ const { inputs, outputs, connectors } = params;
     width: 100%;
   }
 
-  .spin-btn {
-    background: var(--pink);
-    margin-bottom: 2rem;
-    margin-top: -5rem;
-    height: min-content;
-    color: white;
+  .cool-btn {
     border: 4px solid var(--ink);
     border-radius: 8px;
     box-shadow: 6px 6px 0 var(--ink);
-    padding: 14px 48px;
-    font-size: 2rem;
     letter-spacing: 0.1em;
-    cursor: pointer;
     transition:
       transform 0.1s,
       box-shadow 0.1s,
       background 0.15s;
-    user-select: none;
-    flex-shrink: 0;
   }
-  .spin-btn:hover:not(:disabled) {
+  .cool-btn:hover:not(:disabled) {
     transform: translate(-2px, -2px);
     box-shadow: 8px 8px 0 var(--ink);
-    background: #ff1a47;
   }
-  .spin-btn:active:not(:disabled) {
+  .cool-btn:active:not(:disabled) {
     transform: translate(6px, 6px);
     box-shadow: 0 0 0 var(--ink);
   }
-  .spin-btn:disabled {
+  .cool-btn:disabled {
     background: #bbb;
     cursor: not-allowed;
     box-shadow: 3px 3px 0 var(--ink);
     color: #888;
   }
 
+  .spin-btn {
+    background: var(--teal);
+    margin-bottom: 2rem;
+    margin-top: -5rem;
+    height: min-content;
+    color: white;
+    padding: 14px 48px;
+    font-size: 2rem;
+    cursor: pointer;
+    user-select: none;
+    flex-shrink: 0;
+  }
+  .spin-btn:hover:not(:disabled) {
+    background: var(--teal-dark, #007886);
+  }
+
   .get-started-btn {
-    background: var(--green);
+    background: var(--green, #22c55e);
     margin-left: auto;
     margin-bottom: 2rem;
     margin-right: 2rem;
     color: var(--ink);
-    border: 4px solid var(--ink);
-    border-radius: 8px;
-    box-shadow: 6px 6px 0 var(--ink);
     padding: 14px 28px;
     font-size: 1.5rem;
     letter-spacing: 0.08em;
     text-decoration: none;
     flex-shrink: 0;
-    transition:
-      transform 0.1s,
-      box-shadow 0.1s;
   }
   .get-started-btn[hidden] {
     display: none !important;
-  }
-  .get-started-btn:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 8px 8px 0 var(--ink);
-  }
-  .get-started-btn:active {
-    transform: translate(6px, 6px);
-    box-shadow: 0 0 0 var(--ink);
   }
 </style>
 
@@ -548,10 +396,10 @@ const { inputs, outputs, connectors } = params;
         <div style="
           width: 80px; height: 80px; position: relative;
           display: flex; align-items: center; justify-content: center;
-          background: rgba(0,0,0,0.08); border-radius: 8px; overflow: hidden; flex-shrink: 0;
+          background: rgba(0,0,0,0.06); border: 2px solid var(--ink); border-radius: 8px; overflow: hidden; flex-shrink: 0;
         ">
           <img
-            src="${item.image}"
+            src="${Array.isArray(item.image) ? item.image[0] : item.image}"
             alt="${item.label}"
             style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 6px;"
             onerror="this.style.display='none'"
@@ -559,7 +407,7 @@ const { inputs, outputs, connectors } = params;
         </div>
         <span style="
           font-family: 'Bebas Neue', sans-serif;
-          font-size: 1.1rem; letter-spacing: 0.06em; color: white; text-align: center; line-height: 1.1;
+          font-size: 1.1rem; letter-spacing: 0.06em; color: var(--ink); text-align: center; line-height: 1.1;
         ">${item.label}</span>
       </div>
     `,
@@ -609,7 +457,9 @@ const { inputs, outputs, connectors } = params;
       ">${c}</span>`,
       )
       .join("");
-    m.text.textContent = result.implementation;
+    m.text.textContent = Array.isArray(result.implementation)
+      ? result.implementation[0]
+      : result.implementation;
     m.impl.classList.add("visible");
   }
 

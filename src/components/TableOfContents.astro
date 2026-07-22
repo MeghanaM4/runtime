@@ -1,0 +1,54 @@
+---
+// components/TableOfContents.astro
+// Left-side outline listing this page's ## / ### headings, each linking
+// to that heading's auto-generated id so clicking jumps there.
+//
+// Sits inside GuideLayout's .page-body grid, next to <main class="content">
+// — not fixed to the viewport, so it scrolls with the rest of the page
+// and just sticks once it hits the top (see .page-outline's
+// position: sticky in style.css), the same way Google Docs' outline
+// panel behaves.
+//
+// Collapsible via a native <details>/<summary> — no client JS needed
+// for the expand/collapse state, the browser handles it natively.
+//
+// The `headings` array comes from Astro's own render() call in
+// pages/guide/[slug].astro, extracted straight from the page's
+// Markdown/MDX source, so this always matches whatever headings
+// actually exist — and correctly ignores headings rendered dynamically
+// by components like ComponentGrid (e.g. per-part <h4> names), since
+// those never existed in the raw Markdown/MDX AST that render() parses.
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface Props {
+  headings: Heading[];
+}
+
+const { headings } = Astro.props;
+
+// only show section-level headings — skip anything deeper than ###
+const items = headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+{items.length > 0 && (
+  <nav class="page-outline" aria-label="On this page">
+    <details open>
+      <summary>
+        <span class="chevron" aria-hidden="true">▸</span>
+        On this page
+      </summary>
+      <ul>
+        {items.map((h) => (
+          <li class={`depth-${h.depth}`}>
+            <a href={`#${h.slug}`}>{h.text}</a>
+          </li>
+        ))}
+      </ul>
+    </details>
+  </nav>
+)}

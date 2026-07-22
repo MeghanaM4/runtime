@@ -1,0 +1,92 @@
+---
+stepNum: 2
+title: "Pick Your Components"
+sub: "// turning your spin results into real parts"
+accent: "var(--yellow)"
+prevHref: "step1"
+prevLabel: "Step 1: Set Up KiCAD"
+nextHref: "step3"
+nextLabel: "Step 3: Make Your Schematic"
+---
+
+import ComponentGrid from '../../components/ComponentGrid.astro';
+
+How do we incorporate your **input** and **output** into a PCB? Actually, it's pretty simple.
+
+<div class="part-grid">
+<div class="part-card input">
+<span class="tag">INPUT</span>
+<p style="margin:0;font-size:0.92rem;">Something the user does <em>to</em> the board — a button press, a knob turn, a sensor reading.</p>
+</div>
+<div class="part-card output">
+<span class="tag">OUTPUT</span>
+<p style="margin:0;font-size:0.92rem;">Something the board does back — light up, make noise, show data.</p>
+</div>
+<div class="part-card connector">
+<span class="tag">CONNECTOR</span>
+<p style="margin:0;font-size:0.92rem;">The wildcard. It has to physically or electrically tie into your project some way, some how.</p>
+</div>
+</div>
+
+For your components, you've got a couple of options. Here are the main factors you can use to help you choose which one you should use.
+
+### Ease of Use
+Breakout boards are the **easiest type of component** to integrate into your board. They're ready-made mini PCBs that take care of power supply and decoupling and pretty much everything. All you need to do is connect a few signal traces and you're good. **This is highly, *highly* recommended for beginners.** They also have the most code libraries, which means it's way easier to get it working and debug (code is hard, man).
+
+Standalone chips are so much fun to use. Breakout boards are somewhat simple, which also means it takes away the complexity and customizability that a chip gives you. However, using a chip means you have to deal with everything I said before: decoupling, regulating power supply, and generally other weird stuff.
+
+### Cost
+Simply: breakout boards are far more expensive than chips. So take that into account when you're choosing your component.             
+
+## <strong>WARNING</strong>
+You need to make sure that the part you choose is available for a reasonable price in your country. If you're choosing a breakout board, be careful of shipping charges. 
+
+If you're choosing a chip, make sure it's available on <a href="https://jlcpcb.com/parts" style="text-decoration:underline">jlcpcb.com/parts</a> or another PCBA service (or, if you're hand soldering, make sure you have a hotplate). If you need help choosing a sensor from JLCPCB, check out the <a href="https://hermes.hackclub.com/steps/step2.html" style="text-decoration:underline">Hermes guide</a> or post in <a href="https://app.slack.com/client/E09V59WQY1E/C0BJDUK52Q3" style="color:var(--ink); font-weight:bold; text-decoration:underline;">#runtime</a>!
+
+##
+Download the KiCAD **symbol** and **footprint** and hold onto the **datasheets** for your parts (I'll explain what those are for in the next step).
+
+
+# Inputs
+
+<ComponentGrid category="inputs" />
+
+# Outputs
+
+<ComponentGrid category="outputs" />
+
+# Connectors
+
+Connectors are the place to make your Runtime board *yours*. Come up with any cool, funny, and/or stupid idea to fit this into your project.
+
+<ComponentGrid category="connectors" />
+
+##
+
+<div class="callout note">
+<span class="label">Put me in, coach</span>
+<p>You got a good idea for a new input, output, connector, or part? Post it in <a href="https://app.slack.com/client/E09V59WQY1E/C0BJDUK52Q3" style="color:var(--cream); font-weight:bold; text-decoration:underline;">#runtime</a> on the Hack Club Slack and I'll add it!</p>
+</div>
+##
+
+# The Brain 
+*Choosing a microcontroller*
+
+The last part you have to choose is the microcontroller, which is responsible for all "brain" function on your board. It'll grab data from your input, do some stuff with it *(whatever you want)*, and display it to your output *(in whatever way you want)*. 
+
+For beginners, the <a href="https://www.seeedstudio.com/XIAO-RP2040-v1-0-p-5026.html?srsltid=AfmBOopZ6O1DRcPO70uQBmhy8RezpdjVIvaM6vFn7IvIlqvgVhQjBhDK" style="text-decoration:underline">Seeed Studio XIAO RP2040</a> is great. It's got 10 available pins and there's a ton of documentation on it.
+
+<div class="gif-slot">
+<img style="height:50vh" src="https://cdn2.botland.store/106088-pdt_540/seeed-xiao-rp2040-arm-cortex-m0-seeedstudio-102010428.jpg"></img>
+</div>
+
+The XIAO RP2040 is another example of a mini PCB people put onto their custom PCBs. These mini PCB microcontrollers are called microcontroller units, because they come with everything necessary to run and power and flash the microcontroller chip that's on the board (like the <a style="text-decoration:underline" href="https://en.wikipedia.org/wiki/RP2040">RP2040</a> chip on the XIAO RP2040).
+
+If you've made PCBs before, I highly encourage you to pick your favorite microcontroller chip and stick it **straight onto your board**. Reading the datasheet and parsing through tons and tons of weird graphs is actually kinda fun, I promise. Just remember your decoupling capacitors, oscillating crystal, flash memory, and everything else the datasheet may point out.
+
+
+<div class="gif-slot">
+<img style="height:50vh" src="https://cdn11.bigcommerce.com/s-2fbyfnm8ev/images/stencil/1280x1280/products/1330/4659/chips-rp2040__61258.1756640096.jpg?c=2"></img>
+</div>
+
+*Again, make sure you can get your chosen microcontroller unit shipped to you for a reasonable price. Or, if you're choosing to do PCBA, make sure it's available on JLCPCB or another PCBA service.*

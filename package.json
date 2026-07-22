@@ -3,12 +3,13 @@
   "type": "module",
   "version": "1.0.0",
   "scripts": {
-    "dev": "astro dev --port 4321",
-    "start": "astro dev --port 4321",
+    "dev": "astro dev --port 7397",
+    "start": "astro dev --port 7397",
     "build": "astro build",
     "preview": "astro preview"
   },
   "dependencies": {
+    "@astrojs/mdx": "^7.0.3",
     "@astrojs/react": "^6.0.1",
     "@astrojs/tailwind": "^6.0.2",
     "@types/react": "^19.2.17",

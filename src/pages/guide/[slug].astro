@@ -1,0 +1,49 @@
+---
+// pages/guide/[slug].astro
+// One route for every step. Astro builds /guide/step1 .. /guide/step7
+// (one per file in content/guide/) at build time, each rendered through
+// GuideLayout with the frontmatter as props and the markdown body as
+// the slotted content.
+
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import GuideLayout from '../../layouts/GuideLayout.astro';
+
+export async function getStaticPaths() {
+  const steps = await getCollection('guide');
+  return steps.map((step) => ({
+    params: { slug: step.id },
+    props: { step },
+  }));
+}
+
+interface Props {
+  step: CollectionEntry<'guide'>;
+}
+
+const { step } = Astro.props;
+const { Content, headings } = await render(step);
+const {
+  stepNum,
+  title,
+  sub,
+  accent,
+  prevHref,
+  prevLabel,
+  nextHref,
+  nextLabel,
+  isSubmit,
+} = step.data;
+---
+<GuideLayout
+  title={`Runtime — Step ${stepNum}: ${title}`}
+  stepNum={stepNum}
+  stepTitle={title}
+  stepSub={sub}
+  accent={accent}
+  prev={prevHref ? { href: prevHref, label: prevLabel ?? '' } : undefined}
+  next={nextHref ? { href: nextHref, label: nextLabel ?? '' } : undefined}
+  isSubmit={isSubmit}
+  headings={headings}
+>
+  <Content />
+</GuideLayout>
